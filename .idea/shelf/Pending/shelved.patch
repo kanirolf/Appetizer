@@ -1,0 +1,1049 @@
+Index: app/src/main/res/layout/layout_diary_day_card.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/layout_diary_day_card.xml	(revision )
++++ app/src/main/res/layout/layout_diary_day_card.xml	(revision )
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical" android:layout_width="match_parent"
++    android:layout_height="wrap_content">
++
++    <android.support.v7.widget.CardView
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++
++        android:layout_marginBottom="@dimen/content_padding">
++
++        <TextView
++            android:id="@+id/diary_day_card_name"
++
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content" />
++
++    </android.support.v7.widget.CardView>
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/layout_diary_day.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/layout_diary_day.xml	(revision )
++++ app/src/main/res/layout/layout_diary_day.xml	(revision )
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:orientation="vertical" android:layout_width="match_parent"
++    android:layout_height="match_parent" android:paddingTop="@dimen/content_padding"
++    android:paddingBottom="@dimen/content_padding">
++
++    <TextView
++        android:id="@+id/diary_day_date"
++
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content" />
++
++</LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/MockFoodDiary.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/MockFoodDiary.java	(revision )
++++ app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/MockFoodDiary.java	(revision )
+@@ -0,0 +1,83 @@
++package cs125.winter2017.uci.appetizer.food_diary;
++
++
++import org.joda.time.DateTime;
++
++import java.util.Arrays;
++import java.util.Collection;
++import java.util.List;
++
++public final class MockFoodDiary {
++    private MockFoodDiary(){}
++
++    public static final FoodDiary MOCK_DIARY;
++    static {
++        MOCK_DIARY = new FoodDiary(
++                2000, 10, 10, 10, 10, 10, 10, 10
++        );
++
++        DateTime today = new DateTime();
++        FoodDiaryDay day1 = new FoodDiaryDay(today);
++
++        day1.addAll(Arrays.asList(
++            new FoodDiaryEntry.Builder()
++                    .setDate(today.withHourOfDay(9))
++                    .setName("Eggs")
++                    .setServings(2)
++                    .setCalorie(90)
++                    .setFat(7)
++                    .setCholesterol(184)
++                    .setSodium(95)
++                    .setCarbs(0.4)
++                    .setFiber(0)
++                    .setSugar(0.6)
++                    .setProtein(6)
++                    .build(),
++            new FoodDiaryEntry.Builder()
++                    .setDate(today.withHourOfDay(2))
++                    .setName("Ramen")
++                    .setServings(1)
++                    .setCalorie(188)
++                    .setFat(7)
++                    .setCholesterol(0)
++                    .setCarbs(27)
++                    .setFiber(1)
++                    .setSugar(0.7)
++                    .setProtein(4.5)
++                    .setSodium(875)
++                    .build()
++        ));
++
++        DateTime yesterday = today.minusDays(1);
++        FoodDiaryDay day2 = new FoodDiaryDay(yesterday);
++
++        DateTime evening = yesterday.withHourOfDay(18);
++        day2.addAll(Arrays.asList(
++            new FoodDiaryEntry.Builder()
++                .setDate(evening)
++                .setName("Hamburger")
++                .setServings(1)
++                .setCalorie(354)
++                .setFat(17)
++                .setCholesterol(56)
++                .setSodium(497)
++                .setCarbs(29)
++                .setFiber(1.1)
++                .setSugar(5)
++                .setProtein(20)
++                .build(),
++            new FoodDiaryEntry.Builder()
++                .setDate(evening)
++                .setName("French Fries")
++                .setServings(1)
++                .setFat(17)
++                .setCholesterol(0)
++                .setSodium(246)
++                .setCarbs(48)
++                .setFiber(4.4)
++                .setSugar(0.4)
++                .setProtein(4)
++                .build()
++        ));
++    }
++}
+Index: app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/NutrientFactHolder.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/NutrientFactHolder.java	(date 1489739312000)
++++ app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/NutrientFactHolder.java	(revision )
+@@ -1,12 +1,12 @@
+ package cs125.winter2017.uci.appetizer.food_diary;
+ 
+ public interface NutrientFactHolder {
+-    int getCalorie();
+-    int getFat();
+-    int getProtein();
+-    int getCholesterol();
+-    int getSugar();
+-    int getCarbs();
+-    int getSodium();
+-    int getFiber();
++    double getCalorie();
++    double getFat();
++    double getProtein();
++    double getCholesterol();
++    double getSugar();
++    double getCarbs();
++    double getSodium();
++    double getFiber();
+ }
+Index: app/src/main/java/cs125/winter2017/uci/appetizer/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/cs125/winter2017/uci/appetizer/MainActivity.java	(date 1489739312000)
++++ app/src/main/java/cs125/winter2017/uci/appetizer/MainActivity.java	(revision )
+@@ -18,15 +18,27 @@
+ import android.widget.LinearLayout;
+ import android.widget.TextView;
+ 
++import org.w3c.dom.Text;
++
+ import java.text.DateFormat;
+ import java.util.Locale;
+ 
+ import cs125.winter2017.uci.appetizer.food_diary.FoodDiary;
++import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay;
+ import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
++import cs125.winter2017.uci.appetizer.food_diary.MockFoodDiary;
+ 
+ public class MainActivity extends AppCompatActivity
+         implements NavigationView.OnNavigationItemSelectedListener {
+ 
++    private LinearLayout diaryFeed;
++    private LinearLayout diaryDay;
++    private LinearLayout diaryDayCard;
++
++    private TextView diaryFeedEmpty;
++    private TextView diaryDayDate;
++    private TextView diaryDayCardName;
++
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+@@ -43,14 +55,24 @@
+         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+         navigationView.setNavigationItemSelectedListener(this);
+ 
+-        LinearLayout diaryFeed = (LinearLayout) findViewById(R.id.diary_feed);
+-        FoodDiary foodDiary = getFoodDiary();
+-        FoodDiaryAdapter foodDiaryAdapter = new FoodDiaryAdapter(this, 0,
+-                foodDiary.toArray(new FoodDiaryEntry[]{}));
+-        for (int i = 0; i < foodDiary.size(); i++)
+-            diaryFeed.addView(foodDiaryAdapter.getView(i, null, null));
++//        diaryFeed = (LinearLayout) findViewById(R.id.diary_feed);
++//        diaryFeedEmpty = (TextView) diaryFeed.findViewById(R.id.diary_feed_empty);
++//
++//        LayoutInflater layoutInflater = getLayoutInflater();
++//        diaryDay = (LinearLayout) layoutInflater.inflate(R.layout.layout_diary_day, diaryFeed);
++//        diaryDayDate = (TextView) diaryDay.findViewById(R.id.diary_day_date);
++//
++//        diaryDayCard = (LinearLayout) layoutInflater.inflate(R.layout.layout_diary_day_card,
++//                diaryDay);
++//        diaryDayCardName = (TextView) diaryDayCard.findViewById(R.id.diary_day_card_name);
+     }
+ 
++//    @Override
++//    protected void onResume(){
++//        super.onResume();
++//        //populateFoodDiaryList();
++//    }
++
+     @Override
+     public void onBackPressed() {
+         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+@@ -82,38 +104,36 @@
+ 
+     // TODO : actually fetch diary data
+     private FoodDiary getFoodDiary(){
+-        return null;
++        return MockFoodDiary.MOCK_DIARY;
+     }
+ 
+-    private static class FoodDiaryAdapter extends ArrayAdapter<FoodDiaryEntry>{
++    private void populateFoodDiaryList(){
+ 
+-        public FoodDiaryAdapter(@NonNull Context context, @LayoutRes int resource,
+-                                @NonNull FoodDiaryEntry[] objects) {
+-            super(context, resource, objects);
++        diaryFeed.removeAllViews();
++
++        FoodDiary foodDiary = this.getFoodDiary();
++        if (foodDiary.isEmpty()){
++            diaryFeed.addView(diaryFeedEmpty);
++            return;
+         }
+ 
+-        @NonNull
+-        @Override
+-        public View getView(int position, View convertView, @NonNull ViewGroup parent){
+-            FoodDiaryEntry currentEntry = getItem(position);
+-            TextView dateTextView;
++        for (FoodDiaryDay foodDiaryDay : foodDiary.values()){
++            diaryDayDate.setText(foodDiaryDay.getDate().toString());
+ 
+-            if (convertView == null) {
+-                LayoutInflater layoutInflater = (LayoutInflater)
+-                        getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+-                convertView = layoutInflater.inflate(R.layout.layout_diary_entry_summary, null);
++            for (FoodDiaryEntry entry : foodDiaryDay){
++                diaryDayCardName.setText(entry.getName());
+ 
+-                dateTextView = (TextView) convertView.findViewById(R.id.diary_date);
+-                convertView.setTag(dateTextView);
+-            } else
+-                dateTextView = (TextView) convertView.getTag();
++                // TODO: go to the entry page when clicked
++                diaryDayCard.setOnClickListener(new View.OnClickListener() {
++                    @Override
++                    public void onClick(View v) {
+ 
+-
+-            DateFormat formatter = DateFormat.getDateInstance(DateFormat.LONG, Locale.US);
+-            dateTextView.setText(formatter.format(currentEntry.getDate()));
+-
+-            return convertView;
+-        }
++                    }
++                });
+ 
++                diaryDay.addView(diaryDayCard);
++            }
++            diaryFeed.addView(diaryDay);
++        }
+     }
+ }
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(date 1489739312000)
++++ app/src/main/res/values/strings.xml	(revision )
+@@ -5,4 +5,6 @@
+     <string name="navigation_drawer_close">Close navigation drawer</string>
+ 
+     <string name="action_settings">Settings</string>
++
++    <string name="diary_feed_empty">You currently have no entries in your Diary.</string>
+ </resources>
+Index: app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiary.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiary.java	(date 1489739312000)
++++ app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiary.java	(revision )
+@@ -1,28 +1,29 @@
+ package cs125.winter2017.uci.appetizer.food_diary;
+ 
++import android.support.annotation.NonNull;
+ import android.support.annotation.Nullable;
+ 
+ import org.joda.time.DateTime;
+ import org.joda.time.Days;
+ 
+ import java.util.Calendar;
++import java.util.Comparator;
++import java.util.TreeMap;
+ import java.util.TreeSet;
+ 
+-public class FoodDiary extends TreeSet<FoodDiaryDay> implements NutrientFactHolder {
++public class FoodDiary extends TreeMap<DateTime, FoodDiaryDay> implements NutrientFactHolder {
+ 
+-	private int Calorie;
+-	private int Fat;
+-	private int Protein;
+-	private int Cholesterol;
+-	private int Sugar;
+-	private int Carbs;
+-	private int Sodium;
+-	private int Fiber;
++	private double Calorie;
++	private double Fat;
++	private double Protein;
++	private double Cholesterol;
++	private double Sugar;
++	private double Carbs;
++	private double Sodium;
++	private double Fiber;
+ 
+ 	public FoodDiary(int Calorie, int Fat, int Protein, int Cholesterol, int Sugar, int Carbs,
+-                     int Sodium,int Fiber){
++                     int Sodium, int Fiber){
+-        super(FoodDiaryDay.FOOD_DIARY_DAY_COMPARATOR);
+-
+         setCalorie(Calorie);
+ 		setFat(Fat);
+ 		setProtein(Protein);
+@@ -33,102 +34,80 @@
+ 		setFiber(Fiber);
+ 	}
+ 
++	@Nullable
++	public FoodDiaryDay getTodaysEntries(){
++        return this.get(new DateTime());
++    }
++
+-	@Override
++    @Override
+-	public int getCalorie()
+-	{
++    public double getCalorie() {
+-		return Calorie;
+-	}
++        return Calorie;
++    }
+ 
+-	public void setCalorie(int calorie)
+-	{
++    public void setCalorie(double calorie) {
+-		Calorie = calorie;
+-	}
++        Calorie = calorie;
++    }
+ 
+     @Override
+-	public int getFat()
+-	{
++    public double getFat() {
+-		return Fat;
+-	}
++        return Fat;
++    }
+ 
+-	public void setFat(int fat)
+-	{
++    public void setFat(double fat) {
+-		Fat = fat;
+-	}
++        Fat = fat;
++    }
+ 
+     @Override
+-	public int getProtein()
+-	{
++    public double getProtein() {
+-		return Protein;
+-	}
++        return Protein;
++    }
+ 
+-	public void setProtein(int protein)
+-	{
++    public void setProtein(double protein) {
+-		Protein = protein;
+-	}
++        Protein = protein;
++    }
+ 
+     @Override
+-	public int getCholesterol()
+-	{
++    public double getCholesterol() {
+-		return Cholesterol;
+-	}
++        return Cholesterol;
++    }
+ 
+-	public void setCholesterol(int cholesterol)
+-	{
++    public void setCholesterol(double cholesterol) {
+-		Cholesterol = cholesterol;
+-	}
++        Cholesterol = cholesterol;
++    }
+ 
+     @Override
+-	public int getSugar()
+-	{
++    public double getSugar() {
+-		return Sugar;
+-	}
++        return Sugar;
++    }
+ 
+-	public void setSugar(int sugar)
+-	{
++    public void setSugar(double sugar) {
+-		Sugar = sugar;
+-	}
++        Sugar = sugar;
++    }
+ 
+     @Override
+-	public int getCarbs()
+-	{
++    public double getCarbs() {
+-		return Carbs;
+-	}
++        return Carbs;
++    }
+ 
+-	public void setCarbs(int carbs)
+-	{
++    public void setCarbs(double carbs) {
+-		Carbs = carbs;
+-	}
++        Carbs = carbs;
++    }
+ 
+     @Override
+-	public int getSodium()
+-	{
++    public double getSodium() {
+-		return Sodium;
+-	}
++        return Sodium;
++    }
+ 
+-	public void setSodium(int sodium)
+-	{
++    public void setSodium(double sodium) {
+-		Sodium = sodium;
+-	}
++        Sodium = sodium;
++    }
+ 
+     @Override
+-	public int getFiber()
+-	{
++    public double getFiber() {
+-		return Fiber;
+-	}
++        return Fiber;
++    }
+ 
+-	public void setFiber(int fiber)
+-	{
++    public void setFiber(double fiber) {
+-		Fiber = fiber;
+-	}
++        Fiber = fiber;
++    }
+-
+-	@Nullable
+-	public FoodDiaryDay getTodaysEntries(){
+-        DateTime today = new DateTime();
+-        FoodDiaryDay mostRecentDiaryDay = first();
+-
+-        int daysBetween = Days.daysBetween(
+-                today.toLocalDate(), mostRecentDiaryDay.getDate().toLocalDate()).getDays();
+-        return daysBetween == 0 ? mostRecentDiaryDay : null;
+-    }
+-
+ }
+Index: app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiaryEntry.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiaryEntry.java	(date 1489739312000)
++++ app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiaryEntry.java	(revision )
+@@ -1,146 +1,236 @@
+ package cs125.winter2017.uci.appetizer.food_diary;
+ 
++import android.support.annotation.NonNull;
++
+ import org.joda.time.DateTime;
+ import org.joda.time.DateTimeFieldType;
++import org.joda.time.Seconds;
+ 
+-public class FoodDiaryEntry implements NutrientFactHolder {
++public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactHolder {
+ 
+-    private DateTime Date;
+-	private String Name;
++    private final @NonNull DateTime date;
++	private @NonNull String Name;
+ 
+     private int Servings;
+-	private int Calorie;
+-	private int Fat;
+-	private int Protein;
+-	private int Cholesterol;
+-	private int Sugar;
+-	private int Carbs;
+-	private int Sodium;
+-	private int Fiber;
++	private double Calorie;
++	private double Fat;
++	private double Protein;
++	private double Cholesterol;
++	private double Sugar;
++	private double Carbs;
++	private double Sodium;
++	private double Fiber;
+ 
+-    public FoodDiaryEntry(DateTime date, String name, int Servings, int Calorie, int Fat,
+-                          int Protein, int Cholesterol, int Sugar, int Carbs, int Sodium,
+-                          int Fiber) {
++    private FoodDiaryEntry(Builder builder){
++        date = builder.date;
++        Name = builder.Name;
+ 
+-        Date = date;
++        setName(builder.Name);
++        setServings(builder.Servings);
++        setCalorie(builder.Calorie);
++        setFat(builder.Fat);
++        setProtein(builder.Protein);
++        setCholesterol(builder.Cholesterol);
++        setSugar(builder.Sugar);
++        setCarbs(builder.Carbs);
++        setSodium(builder.Sodium);
++        setFiber(builder.Fiber);
++    }
++
++    @Override
++    public int compareTo(@NonNull FoodDiaryEntry other) {
++        int secondDiff = Seconds.secondsBetween(this.getDate(), other.getDate()).getSeconds();
++        return secondDiff != 0 ? secondDiff : this.getName().compareTo(other.getName());
++    }
++
++    public static class Builder {
++        private @NonNull DateTime date;
++        private @NonNull String Name;
++
++        private int Servings;
++        private double Calorie;
++        private double Fat;
++        private double Protein;
++        private double Cholesterol;
++        private double Sugar;
++        private double Carbs;
++        private double Sodium;
++        private double Fiber;
++
++        public Builder(){
++            date = new DateTime();
++            Name = "";
++
++            Servings = 1;
++            Calorie = 0;
++            Fat = 0;
++            Protein = 0;
++            Cholesterol = 0;
++            Sugar = 0;
++            Carbs = 0;
++            Sodium = 0;
++            Fiber = 0;
++        }
++
++        public Builder setDate(@NonNull DateTime date){
++            date = date;
++            return this;
++        }
++
++        public Builder setName(@NonNull String name){
+-        Name = name;
++            Name = name;
++            return this;
++        }
+ 
+-        setServings(Servings);
+-        setCalorie(Calorie);
+-        setFat(Fat);
+-        setProtein(Protein);
+-        setCholesterol(Cholesterol);
+-        setSugar(Sugar);
+-        setCarbs(Carbs);
+-        setSodium(Sodium);
+-        setFiber(Fiber);
++        public Builder setServings(int servings) {
++            Servings = servings;
++            return this;
+-    }
+-	
++        }
++
+-	public String returnDate(){
+-		return Integer.toString(Date.get(DateTimeFieldType.year())) + "-" +
+-                Integer.toString(Date.get(DateTimeFieldType.monthOfYear())) + "-" +
+-                Integer.toString(Date.get(DateTimeFieldType.dayOfMonth()));
++        public Builder setCalorie(double calorie) {
++            Calorie = calorie;
++            return this;
+-	}
++        }
+ 
+-    public DateTime getDate()
+-    {
+-        return Date;
++        public Builder setFat(double fat) {
++            Fat = fat;
++            return this;
+-    }
++        }
+ 
+-	public String getName()
+-	{
+-		return Name;
++        public Builder setProtein(double protein) {
++            Protein = protein;
++            return this;
+-	}
++        }
+ 
+-	public int getServings(){
+-        return Servings;
++        public Builder setCholesterol(double cholesterol) {
++            Cholesterol = cholesterol;
++            return this;
+-	}
++        }
+ 
+-	@Override
+-	public int getCalorie()
+-	{
+-		return Calorie;
++        public Builder setSugar(double sugar) {
++            Sugar = sugar;
++            return this;
+-	}
++        }
+ 
+-	@Override
+-	public int getFat()
+-	{
+-		return Fat;
++        public Builder setCarbs(double carbs) {
++            Carbs = carbs;
++            return this;
+-	}
++        }
+ 
+-    @Override
+-	public int getProtein()
+-	{
+-		return Protein;
++        public Builder setSodium(double sodium) {
++            Sodium = sodium;
++            return this;
+-	}
++        }
+ 
+-    @Override
+-	public int getCholesterol()
+-	{
+-		return Cholesterol;
++        public Builder setFiber(double fiber) {
++            Fiber = fiber;
++            return this;
+-	}
++        }
+ 
+-    @Override
+-	public int getSugar()
+-	{
+-		return Sugar;
++        public FoodDiaryEntry build(){
++            return new FoodDiaryEntry(this);
+-	}
++        }
++    }
+-
++	
+-    @Override
+-	public int getCarbs()
+-	{
+-		return Carbs;
++	public String returnDate(){
++		return Integer.toString(date.get(DateTimeFieldType.year())) + "-" +
++                Integer.toString(date.get(DateTimeFieldType.monthOfYear())) + "-" +
++                Integer.toString(date.get(DateTimeFieldType.dayOfMonth()));
+ 	}
+ 
+-    @Override
+-	public int getSodium()
+-	{
+-		return Sodium;
++    @NonNull
++    public DateTime getDate() {
++        return date;
+-	}
++    }
+ 
+-    @Override
+-	public int getFiber()
+-	{
+-		return Fiber;
++    @NonNull
++    public String getName() {
++        return Name;
+-	}
++    }
+ 
+-    public void setName(String name) {
++    public void setName(@NonNull String name) {
+         Name = name;
+     }
+ 
++    public int getServings() {
++        return Servings;
++    }
++
+     public void setServings(int servings) {
+         Servings = servings;
+     }
+ 
+-    public void setCalorie(int calorie){
++    @Override
++    public double getCalorie() {
++        return Calorie;
++    }
++
++    public void setCalorie(double calorie) {
+         Calorie = calorie;
+     }
+ 
+-    public void setFat(int fat){
++    @Override
++    public double getFat() {
++        return Fat;
++    }
++
++    public void setFat(double fat) {
+         Fat = fat;
+     }
+ 
+-    public void setProtein(int protein) {
++    @Override
++    public double getProtein() {
++        return Protein;
++    }
++
++    public void setProtein(double protein) {
+         Protein = protein;
+     }
+ 
+-    public void setCholesterol(int cholesterol) {
++    @Override
++    public double getCholesterol() {
++        return Cholesterol;
++    }
++
++    public void setCholesterol(double cholesterol) {
+         Cholesterol = cholesterol;
+     }
+ 
+-    public void setSugar(int sugar) {
++    @Override
++    public double getSugar() {
++        return Sugar;
++    }
++
++    public void setSugar(double sugar) {
+         Sugar = sugar;
+     }
+ 
+-    public void setCarbs(int carbs) {
++    @Override
++    public double getCarbs() {
++        return Carbs;
++    }
++
++    public void setCarbs(double carbs) {
+         Carbs = carbs;
+     }
+ 
+-    public void setSodium(int sodium) {
++    @Override
++    public double getSodium() {
++        return Sodium;
++    }
++
++    public void setSodium(double sodium) {
+         Sodium = sodium;
+     }
+ 
+-    public void setFiber(int fiber) {
++    @Override
++    public double getFiber() {
++        return Fiber;
++    }
++
++    public void setFiber(double fiber) {
+         Fiber = fiber;
+     }
++
++
+ }
+Index: app/src/main/res/layout/content_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/content_main.xml	(date 1489739312000)
++++ app/src/main/res/layout/content_main.xml	(revision )
+@@ -106,7 +106,18 @@
+                 android:id="@+id/diary_feed"
+                 android:orientation="vertical"
+                 android:layout_width="match_parent"
+-                android:layout_height="wrap_content"></LinearLayout>
++                android:layout_height="wrap_content">
++
++                <Text
++                    android:id="@+id/diary_feed_empty"
++                    android:layout_width="match_parent"
++                    android:layout_height="wrap_content"
++                    android:paddingTop="@dimen/content_padding"
++                    android:paddingBottom="@dimen/content_padding"
++
++                    android:text="@string/diary_feed_empty" />
++
++            </LinearLayout>
+ 
+         </LinearLayout>
+     </ScrollView>
+Index: app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiaryDay.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiaryDay.java	(date 1489739312000)
++++ app/src/main/java/cs125/winter2017/uci/appetizer/food_diary/FoodDiaryDay.java	(revision )
+@@ -1,87 +1,82 @@
+ package cs125.winter2017.uci.appetizer.food_diary;
+ 
++import android.support.annotation.NonNull;
++
+ import org.joda.time.DateTime;
+-import org.joda.time.Days;
+ 
+-import java.util.Comparator;
+ import java.util.TreeSet;
+ 
+ public class FoodDiaryDay extends TreeSet<FoodDiaryEntry> implements NutrientFactHolder {
+ 
+-    public static final Comparator<FoodDiaryDay> FOOD_DIARY_DAY_COMPARATOR =
+-        new Comparator<FoodDiaryDay>() {
+-            @Override
+-            public int compare(FoodDiaryDay entry1, FoodDiaryDay entry2) {
+-                return Days.daysBetween(
+-                        entry1.getDate().toLocalDate(), entry2.getDate().toLocalDate()
+-                ).getDays();
++    private final @NonNull DateTime Date;
++
++    public FoodDiaryDay(@NonNull DateTime date){
++        Date = date;
+-            }
++    }
+-        };
+ 
+-    private DateTime date;
+-
++    @NonNull
+     public DateTime getDate(){
+-        return date;
++        return Date;
+     }
+ 
+     @Override
+-    public int getCalorie() {
+-        int totalCalories = 0;
++    public double getCalorie() {
++        double totalCalories = 0;
+         for (FoodDiaryEntry entry : this)
+             totalCalories += entry.getCalorie();
+         return totalCalories;
+     }
+ 
+     @Override
+-    public int getFat() {
+-        int totalFat = 0;
++    public double getFat() {
++        double totalFat = 0;
+         for (FoodDiaryEntry entry : this)
+             totalFat += entry.getFat();
+         return totalFat;
+     }
+ 
+     @Override
+-    public int getProtein() {
+-        int totalProtein = 0;
++    public double getProtein() {
++        double totalProtein = 0;
+         for (FoodDiaryEntry entry : this)
+             totalProtein += entry.getProtein();
+         return totalProtein;
+     }
+ 
+     @Override
+-    public int getCholesterol() {
+-        int totalCholesterol = 0;
++    public double getCholesterol() {
++        double totalCholesterol = 0;
+         for (FoodDiaryEntry entry : this)
+             totalCholesterol += entry.getCholesterol();
+         return totalCholesterol;
+     }
+ 
+     @Override
+-    public int getSugar() {
+-        int totalSugar = 0;
++    public double getSugar() {
++        double totalSugar = 0;
+         for (FoodDiaryEntry entry : this)
+             totalSugar += entry.getSugar();
+         return totalSugar;
+     }
+ 
+     @Override
+-    public int getCarbs() {
+-        int totalCarbs = 0;
++    public double getCarbs() {
++        double totalCarbs = 0;
+         for (FoodDiaryEntry entry : this)
+             totalCarbs += entry.getCarbs();
+         return totalCarbs;
+     }
+ 
+     @Override
+-    public int getSodium() {
+-        int totalSodium = 0;
++    public double getSodium() {
++        double totalSodium = 0;
+         for (FoodDiaryEntry entry : this)
+             totalSodium += entry.getSodium();
+         return totalSodium;
+     }
+ 
+     @Override
+-    public int getFiber() {
++    public double getFiber() {
+         int totalFiber = 0;
+         for (FoodDiaryEntry entry : this)
+             totalFiber += entry.getFiber();
+Index: app/src/main/res/layout/layout_diary_entry_summary.xml
+===================================================================
+--- app/src/main/res/layout/layout_diary_entry_summary.xml	(date 1489739312000)
++++ app/src/main/res/layout/layout_diary_entry_summary.xml	(date 1489739312000)
+@@ -1,44 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:orientation="vertical" android:layout_width="match_parent"
+-    android:layout_height="wrap_content">
+-
+-    <android.support.v7.widget.CardView
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-
+-        android:layout_marginBottom="@dimen/content_padding"
+-
+-        android:background="@android:color/white">
+-
+-        <RelativeLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-
+-            android:padding="@dimen/content_padding">
+-
+-            <TextView
+-                android:id="@+id/diary_date"
+-                android:layout_alignParentLeft="true"
+-                android:layout_centerInParent="true"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-
+-                android:fontFamily="sans-serif-condensed"
+-                android:textSize="@dimen/card_content_font_size"/>
+-
+-            <TextView
+-                android:layout_alignParentRight="true"
+-                android:layout_centerInParent="true"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-
+-                android:fontFamily="sans-serif-condensed"
+-                android:textSize="@dimen/card_content_font_size"
+-
+-                android:text=">" />
+-
+-        </RelativeLayout>
+-
+-    </android.support.v7.widget.CardView>
+-</LinearLayout>
+\ No newline at end of file

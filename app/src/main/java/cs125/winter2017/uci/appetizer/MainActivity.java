@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -107,12 +108,34 @@ public class MainActivity extends AppCompatActivity
                         R.layout.layout_diary_day_card, null);
                 ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_name))
                         .setText(entry.getName());
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_calories))
+                        .setText(String.format("%s cals", (int)entry.getCalorie()));
 
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_fat))
+                        .setText(String.format("%s g", (int)entry.getFat()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_cholesterol))
+                        .setText(String.format("%s mg", (int)entry.getCholesterol()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_sodium))
+                        .setText(String.format("%s mg", (int)entry.getSodium()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_carbohydrates))
+                        .setText(String.format("%s g", (int)entry.getCarbs()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_fiber))
+                        .setText(String.format("%s g", (int)entry.getFiber()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_sugar))
+                        .setText(String.format("%s g", (int)entry.getSugar()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_protein))
+                        .setText(String.format("%s g", (int)entry.getProtein()));
+
+                final FrameLayout nutrientView =
+                        (FrameLayout) diaryDayCard.findViewById(R.id.diary_day_card_nutrients);
                 // TODO: go to the entry page when clicked
                 diaryDayCard.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        if (nutrientView.getVisibility() == View.GONE)
+                            nutrientView.setVisibility(View.VISIBLE);
+                        else
+                            nutrientView.setVisibility(View.GONE);
                     }
                 });
                 diaryDay.addView(diaryDayCard);

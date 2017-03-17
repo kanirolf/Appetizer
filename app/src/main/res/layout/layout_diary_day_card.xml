@@ -9,31 +9,176 @@
 
         android:layout_marginBottom="@dimen/content_padding">
 
+        <LinearLayout
+            android:orientation="vertical"
 
-        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="wrap_content">
 
-            android:padding="@dimen/content_padding">
-
-            <TextView
-                android:id="@+id/diary_day_card_name"
-
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_gravity="left" />
+                android:padding="@dimen/content_padding">
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/diary_day_card_name"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="left"
+
+                    android:textSize="@dimen/card_label_header_font_size"/>
+
+                <TextView
+                    android:id="@+id/diary_day_card_calories"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="right"
+
+                    android:text=">"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/diary_day_card_nutrients"
+
+                android:visibility="gone"
+
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_gravity="right"
+                android:padding="@dimen/content_padding">
 
-                android:text=">"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-        </FrameLayout>
+                    android:layout_gravity="left">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Fat"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Protein"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Cholesterol"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Sugar"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Carbohydrates"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Sodium"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Fiber"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_gravity="right">
+
+                    <TextView
+                        android:id="@+id/diary_day_card_fat"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"/>
+
+                    <TextView
+                        android:id="@+id/diary_day_card_protein"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"/>
+
+                    <TextView
+                        android:id="@+id/diary_day_card_cholesterol"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"/>
+
+                    <TextView
+                        android:id="@+id/diary_day_card_sugar"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"/>
+
+                    <TextView
+                        android:id="@+id/diary_day_card_carbohydrates"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"/>
+
+                    <TextView
+                        android:id="@+id/diary_day_card_sodium"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"/>
+
+                    <TextView
+                        android:id="@+id/diary_day_card_fiber"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textAlignment="viewEnd"
+                        android:layout_gravity="end"/>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
