@@ -1,31 +1,28 @@
 package cs125.winter2017.uci.appetizer;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.util.Locale;
-
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiary;
+import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay;
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
+import cs125.winter2017.uci.appetizer.food_diary.MockFoodDiary;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private LinearLayout diaryFeed;
+    private TextView diaryFeedEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +40,14 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        LinearLayout diaryFeed = (LinearLayout) findViewById(R.id.diary_feed);
-        FoodDiary foodDiary = getFoodDiary();
-        FoodDiaryAdapter foodDiaryAdapter = new FoodDiaryAdapter(this, 0,
-                foodDiary.toArray(new FoodDiaryEntry[]{}));
-        for (int i = 0; i < foodDiary.size(); i++)
-            diaryFeed.addView(foodDiaryAdapter.getView(i, null, null));
+        diaryFeed = (LinearLayout) findViewById(R.id.diary_feed);
+        diaryFeedEmpty = (TextView) diaryFeed.findViewById(R.id.diary_feed_empty);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        populateFoodDiaryList();
     }
 
     @Override
@@ -82,37 +81,43 @@ public class MainActivity extends AppCompatActivity
 
     // TODO : actually fetch diary data
     private FoodDiary getFoodDiary(){
-        return null;
+        return MockFoodDiary.MOCK_DIARY;
     }
 
-    private static class FoodDiaryAdapter extends ArrayAdapter<FoodDiaryEntry>{
+    private void populateFoodDiaryList(){
 
-        public FoodDiaryAdapter(@NonNull Context context, @LayoutRes int resource,
-                                @NonNull FoodDiaryEntry[] objects) {
-            super(context, resource, objects);
+        diaryFeed.removeAllViews();
+
+        FoodDiary foodDiary = this.getFoodDiary();
+        if (foodDiary.isEmpty()){
+            diaryFeed.addView(diaryFeedEmpty);
+            return;
         }
 
-        @NonNull
-        @Override
-        public View getView(int position, View convertView, @NonNull ViewGroup parent){
-            FoodDiaryEntry currentEntry = getItem(position);
-            TextView dateTextView;
+        LayoutInflater layoutInflater = getLayoutInflater();
 
-            if (convertView == null) {
-                LayoutInflater layoutInflater = (LayoutInflater)
-                        getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-                convertView = layoutInflater.inflate(R.layout.layout_diary_entry_summary, null);
+        for (FoodDiaryDay foodDiaryDay : foodDiary.descendingMap().values()){
+            LinearLayout diaryDay = (LinearLayout) layoutInflater.inflate(
+                    R.layout.layout_diary_day, null);
+            ((TextView)diaryDay.findViewById(R.id.diary_day_date))
+                    .setText(foodDiaryDay.getHumanReadableDate());
 
-                dateTextView = (TextView) convertView.findViewById(R.id.diary_date);
-                convertView.setTag(dateTextView);
-            } else
-                dateTextView = (TextView) convertView.getTag();
+            for (FoodDiaryEntry entry : foodDiaryDay){
+                LinearLayout diaryDayCard = (LinearLayout) layoutInflater.inflate(
+                        R.layout.layout_diary_day_card, null);
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_name))
+                        .setText(entry.getName());
 
+                // TODO: go to the entry page when clicked
+                diaryDayCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
-            DateFormat formatter = DateFormat.getDateInstance(DateFormat.LONG, Locale.US);
-            dateTextView.setText(formatter.format(currentEntry.getDate()));
-
-            return convertView;
+                    }
+                });
+                diaryDay.addView(diaryDayCard);
+            }
+            diaryFeed.addView(diaryDay);
         }
 
     }

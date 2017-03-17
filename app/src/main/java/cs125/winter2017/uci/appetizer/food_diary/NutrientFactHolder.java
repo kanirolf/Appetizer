@@ -1,12 +1,12 @@
 package cs125.winter2017.uci.appetizer.food_diary;
 
 public interface NutrientFactHolder {
-    int getCalorie();
-    int getFat();
-    int getProtein();
-    int getCholesterol();
-    int getSugar();
-    int getCarbs();
-    int getSodium();
-    int getFiber();
+    double getCalorie();
+    double getFat();
+    double getProtein();
+    double getCholesterol();
+    double getSugar();
+    double getCarbs();
+    double getSodium();
+    double getFiber();
 }

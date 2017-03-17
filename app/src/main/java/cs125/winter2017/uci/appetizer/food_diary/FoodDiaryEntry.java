@@ -1,146 +1,236 @@
 package cs125.winter2017.uci.appetizer.food_diary;
 
+import android.support.annotation.NonNull;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
+import org.joda.time.Seconds;
 
-public class FoodDiaryEntry implements NutrientFactHolder {
+public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactHolder {
 
-    private DateTime Date;
-	private String Name;
+    private final @NonNull DateTime date;
+	private @NonNull String Name;
 
     private int Servings;
-	private int Calorie;
-	private int Fat;
-	private int Protein;
-	private int Cholesterol;
-	private int Sugar;
-	private int Carbs;
-	private int Sodium;
-	private int Fiber;
+	private double Calorie;
+	private double Fat;
+	private double Protein;
+	private double Cholesterol;
+	private double Sugar;
+	private double Carbs;
+	private double Sodium;
+	private double Fiber;
 
-    public FoodDiaryEntry(DateTime date, String name, int Servings, int Calorie, int Fat,
-                          int Protein, int Cholesterol, int Sugar, int Carbs, int Sodium,
-                          int Fiber) {
+    private FoodDiaryEntry(Builder builder){
+        date = builder.date;
+        Name = builder.Name;
 
-        Date = date;
-        Name = name;
+        setName(builder.Name);
+        setServings(builder.Servings);
+        setCalorie(builder.Calorie);
+        setFat(builder.Fat);
+        setProtein(builder.Protein);
+        setCholesterol(builder.Cholesterol);
+        setSugar(builder.Sugar);
+        setCarbs(builder.Carbs);
+        setSodium(builder.Sodium);
+        setFiber(builder.Fiber);
+    }
 
-        setServings(Servings);
-        setCalorie(Calorie);
-        setFat(Fat);
-        setProtein(Protein);
-        setCholesterol(Cholesterol);
-        setSugar(Sugar);
-        setCarbs(Carbs);
-        setSodium(Sodium);
-        setFiber(Fiber);
+    @Override
+    public int compareTo(@NonNull FoodDiaryEntry other) {
+        int secondDiff = Seconds.secondsBetween(this.getDate(), other.getDate()).getSeconds();
+        return secondDiff != 0 ? secondDiff : this.getName().compareTo(other.getName());
+    }
+
+    public static class Builder {
+        private @NonNull DateTime date;
+        private @NonNull String Name;
+
+        private int Servings;
+        private double Calorie;
+        private double Fat;
+        private double Protein;
+        private double Cholesterol;
+        private double Sugar;
+        private double Carbs;
+        private double Sodium;
+        private double Fiber;
+
+        public Builder(){
+            date = new DateTime();
+            Name = "";
+
+            Servings = 1;
+            Calorie = 0;
+            Fat = 0;
+            Protein = 0;
+            Cholesterol = 0;
+            Sugar = 0;
+            Carbs = 0;
+            Sodium = 0;
+            Fiber = 0;
+        }
+
+        public Builder setDate(@NonNull DateTime date){
+            date = date;
+            return this;
+        }
+
+        public Builder setName(@NonNull String name){
+            Name = name;
+            return this;
+        }
+
+        public Builder setServings(int servings) {
+            Servings = servings;
+            return this;
+        }
+
+        public Builder setCalorie(double calorie) {
+            Calorie = calorie;
+            return this;
+        }
+
+        public Builder setFat(double fat) {
+            Fat = fat;
+            return this;
+        }
+
+        public Builder setProtein(double protein) {
+            Protein = protein;
+            return this;
+        }
+
+        public Builder setCholesterol(double cholesterol) {
+            Cholesterol = cholesterol;
+            return this;
+        }
+
+        public Builder setSugar(double sugar) {
+            Sugar = sugar;
+            return this;
+        }
+
+        public Builder setCarbs(double carbs) {
+            Carbs = carbs;
+            return this;
+        }
+
+        public Builder setSodium(double sodium) {
+            Sodium = sodium;
+            return this;
+        }
+
+        public Builder setFiber(double fiber) {
+            Fiber = fiber;
+            return this;
+        }
+
+        public FoodDiaryEntry build(){
+            return new FoodDiaryEntry(this);
+        }
     }
 	
 	public String returnDate(){
-		return Integer.toString(Date.get(DateTimeFieldType.year())) + "-" +
-                Integer.toString(Date.get(DateTimeFieldType.monthOfYear())) + "-" +
-                Integer.toString(Date.get(DateTimeFieldType.dayOfMonth()));
+		return Integer.toString(date.get(DateTimeFieldType.year())) + "-" +
+                Integer.toString(date.get(DateTimeFieldType.monthOfYear())) + "-" +
+                Integer.toString(date.get(DateTimeFieldType.dayOfMonth()));
 	}
 
-    public DateTime getDate()
-    {
-        return Date;
+    @NonNull
+    public DateTime getDate() {
+        return date;
     }
 
-	public String getName()
-	{
-		return Name;
-	}
+    @NonNull
+    public String getName() {
+        return Name;
+    }
 
-	public int getServings(){
-        return Servings;
-	}
-
-	@Override
-	public int getCalorie()
-	{
-		return Calorie;
-	}
-
-	@Override
-	public int getFat()
-	{
-		return Fat;
-	}
-
-    @Override
-	public int getProtein()
-	{
-		return Protein;
-	}
-
-    @Override
-	public int getCholesterol()
-	{
-		return Cholesterol;
-	}
-
-    @Override
-	public int getSugar()
-	{
-		return Sugar;
-	}
-
-    @Override
-	public int getCarbs()
-	{
-		return Carbs;
-	}
-
-    @Override
-	public int getSodium()
-	{
-		return Sodium;
-	}
-
-    @Override
-	public int getFiber()
-	{
-		return Fiber;
-	}
-
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         Name = name;
+    }
+
+    public int getServings() {
+        return Servings;
     }
 
     public void setServings(int servings) {
         Servings = servings;
     }
 
-    public void setCalorie(int calorie){
+    @Override
+    public double getCalorie() {
+        return Calorie;
+    }
+
+    public void setCalorie(double calorie) {
         Calorie = calorie;
     }
 
-    public void setFat(int fat){
+    @Override
+    public double getFat() {
+        return Fat;
+    }
+
+    public void setFat(double fat) {
         Fat = fat;
     }
 
-    public void setProtein(int protein) {
+    @Override
+    public double getProtein() {
+        return Protein;
+    }
+
+    public void setProtein(double protein) {
         Protein = protein;
     }
 
-    public void setCholesterol(int cholesterol) {
+    @Override
+    public double getCholesterol() {
+        return Cholesterol;
+    }
+
+    public void setCholesterol(double cholesterol) {
         Cholesterol = cholesterol;
     }
 
-    public void setSugar(int sugar) {
+    @Override
+    public double getSugar() {
+        return Sugar;
+    }
+
+    public void setSugar(double sugar) {
         Sugar = sugar;
     }
 
-    public void setCarbs(int carbs) {
+    @Override
+    public double getCarbs() {
+        return Carbs;
+    }
+
+    public void setCarbs(double carbs) {
         Carbs = carbs;
     }
 
-    public void setSodium(int sodium) {
+    @Override
+    public double getSodium() {
+        return Sodium;
+    }
+
+    public void setSodium(double sodium) {
         Sodium = sodium;
     }
 
-    public void setFiber(int fiber) {
+    @Override
+    public double getFiber() {
+        return Fiber;
+    }
+
+    public void setFiber(double fiber) {
         Fiber = fiber;
     }
+
+
 }

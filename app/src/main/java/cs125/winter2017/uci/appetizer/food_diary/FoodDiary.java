@@ -1,28 +1,29 @@
 package cs125.winter2017.uci.appetizer.food_diary;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
-public class FoodDiary extends TreeSet<FoodDiaryDay> implements NutrientFactHolder {
+public class FoodDiary extends TreeMap<DateTime, FoodDiaryDay> implements NutrientFactHolder {
 
-	private int Calorie;
-	private int Fat;
-	private int Protein;
-	private int Cholesterol;
-	private int Sugar;
-	private int Carbs;
-	private int Sodium;
-	private int Fiber;
+	private double Calorie;
+	private double Fat;
+	private double Protein;
+	private double Cholesterol;
+	private double Sugar;
+	private double Carbs;
+	private double Sodium;
+	private double Fiber;
 
 	public FoodDiary(int Calorie, int Fat, int Protein, int Cholesterol, int Sugar, int Carbs,
-                     int Sodium,int Fiber){
-        super(FoodDiaryDay.FOOD_DIARY_DAY_COMPARATOR);
-
+                     int Sodium, int Fiber){
         setCalorie(Calorie);
 		setFat(Fat);
 		setProtein(Protein);
@@ -33,102 +34,80 @@ public class FoodDiary extends TreeSet<FoodDiaryDay> implements NutrientFactHold
 		setFiber(Fiber);
 	}
 
-	@Override
-	public int getCalorie()
-	{
-		return Calorie;
-	}
-
-	public void setCalorie(int calorie)
-	{
-		Calorie = calorie;
-	}
-
-    @Override
-	public int getFat()
-	{
-		return Fat;
-	}
-
-	public void setFat(int fat)
-	{
-		Fat = fat;
-	}
-
-    @Override
-	public int getProtein()
-	{
-		return Protein;
-	}
-
-	public void setProtein(int protein)
-	{
-		Protein = protein;
-	}
-
-    @Override
-	public int getCholesterol()
-	{
-		return Cholesterol;
-	}
-
-	public void setCholesterol(int cholesterol)
-	{
-		Cholesterol = cholesterol;
-	}
-
-    @Override
-	public int getSugar()
-	{
-		return Sugar;
-	}
-
-	public void setSugar(int sugar)
-	{
-		Sugar = sugar;
-	}
-
-    @Override
-	public int getCarbs()
-	{
-		return Carbs;
-	}
-
-	public void setCarbs(int carbs)
-	{
-		Carbs = carbs;
-	}
-
-    @Override
-	public int getSodium()
-	{
-		return Sodium;
-	}
-
-	public void setSodium(int sodium)
-	{
-		Sodium = sodium;
-	}
-
-    @Override
-	public int getFiber()
-	{
-		return Fiber;
-	}
-
-	public void setFiber(int fiber)
-	{
-		Fiber = fiber;
-	}
-
 	@Nullable
 	public FoodDiaryDay getTodaysEntries(){
-        DateTime today = new DateTime();
-        FoodDiaryDay mostRecentDiaryDay = first();
-
-        int daysBetween = Days.daysBetween(
-                today.toLocalDate(), mostRecentDiaryDay.getDate().toLocalDate()).getDays();
-        return daysBetween == 0 ? mostRecentDiaryDay : null;
+        return this.get(new DateTime());
     }
 
+    @Override
+    public double getCalorie() {
+        return Calorie;
+    }
+
+    public void setCalorie(double calorie) {
+        Calorie = calorie;
+    }
+
+    @Override
+    public double getFat() {
+        return Fat;
+    }
+
+    public void setFat(double fat) {
+        Fat = fat;
+    }
+
+    @Override
+    public double getProtein() {
+        return Protein;
+    }
+
+    public void setProtein(double protein) {
+        Protein = protein;
+    }
+
+    @Override
+    public double getCholesterol() {
+        return Cholesterol;
+    }
+
+    public void setCholesterol(double cholesterol) {
+        Cholesterol = cholesterol;
+    }
+
+    @Override
+    public double getSugar() {
+        return Sugar;
+    }
+
+    public void setSugar(double sugar) {
+        Sugar = sugar;
+    }
+
+    @Override
+    public double getCarbs() {
+        return Carbs;
+    }
+
+    public void setCarbs(double carbs) {
+        Carbs = carbs;
+    }
+
+    @Override
+    public double getSodium() {
+        return Sodium;
+    }
+
+    public void setSodium(double sodium) {
+        Sodium = sodium;
+    }
+
+    @Override
+    public double getFiber() {
+        return Fiber;
+    }
+
+    public void setFiber(double fiber) {
+        Fiber = fiber;
+    }
 }
