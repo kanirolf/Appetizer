@@ -1,8 +1,15 @@
-import java.util.Calendar;
+package cs125.winter2017.uci.appetizer.food_diary;
 
-public class Entry
-{
-	private String Name;
+import android.support.annotation.Nullable;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import java.util.Calendar;
+import java.util.TreeSet;
+
+public class FoodDiary extends TreeSet<FoodDiaryDay> implements NutrientFactHolder {
+
 	private int Calorie;
 	private int Fat;
 	private int Protein;
@@ -11,35 +18,22 @@ public class Entry
 	private int Carbs;
 	private int Sodium;
 	private int Fiber;
-	private Calendar date;
-	
-	public Entry(String Name,int serving,int cal,int fat,int protein,int cholesterol,int sugar,int carbs,int sodium,int fiber){
-		setName(Name);
-		setCalorie(serving*cal);
-		setFat(serving*fat);
-		setProtein(serving*protein);
-		setCholesterol(serving*cholesterol);
-		setSugar(serving*sugar);
-		setCarbs(serving*carbs);
-		setSodium(serving*sodium);
-		setFiber(serving*Fiber);
-		date = Calendar.getInstance();
-	}
-	
-	public String returnDate(){
-		return Integer.toString(date.get(Calendar.YEAR)) + "-" + Integer.toString(date.get(Calendar.MONTH)) + "-" + Integer.toString(date.get(Calendar.DAY_OF_MONTH));
+
+	public FoodDiary(int Calorie, int Fat, int Protein, int Cholesterol, int Sugar, int Carbs,
+                     int Sodium,int Fiber){
+        super(FoodDiaryDay.FOOD_DIARY_DAY_COMPARATOR);
+
+        setCalorie(Calorie);
+		setFat(Fat);
+		setProtein(Protein);
+		setCholesterol(Cholesterol);
+		setSugar(Sugar);
+		setCarbs(Carbs);
+		setSodium(Sodium);
+		setFiber(Fiber);
 	}
 
-	public String getName()
-	{
-		return Name;
-	}
-
-	public void setName(String name)
-	{
-		Name = name;
-	}
-
+	@Override
 	public int getCalorie()
 	{
 		return Calorie;
@@ -50,6 +44,7 @@ public class Entry
 		Calorie = calorie;
 	}
 
+    @Override
 	public int getFat()
 	{
 		return Fat;
@@ -60,6 +55,7 @@ public class Entry
 		Fat = fat;
 	}
 
+    @Override
 	public int getProtein()
 	{
 		return Protein;
@@ -70,6 +66,7 @@ public class Entry
 		Protein = protein;
 	}
 
+    @Override
 	public int getCholesterol()
 	{
 		return Cholesterol;
@@ -80,6 +77,7 @@ public class Entry
 		Cholesterol = cholesterol;
 	}
 
+    @Override
 	public int getSugar()
 	{
 		return Sugar;
@@ -90,6 +88,7 @@ public class Entry
 		Sugar = sugar;
 	}
 
+    @Override
 	public int getCarbs()
 	{
 		return Carbs;
@@ -100,6 +99,7 @@ public class Entry
 		Carbs = carbs;
 	}
 
+    @Override
 	public int getSodium()
 	{
 		return Sodium;
@@ -110,6 +110,7 @@ public class Entry
 		Sodium = sodium;
 	}
 
+    @Override
 	public int getFiber()
 	{
 		return Fiber;
@@ -120,13 +121,14 @@ public class Entry
 		Fiber = fiber;
 	}
 
-	public Calendar getDate()
-	{
-		return date;
-	}
+	@Nullable
+	public FoodDiaryDay getTodaysEntries(){
+        DateTime today = new DateTime();
+        FoodDiaryDay mostRecentDiaryDay = first();
 
-	public void setDate(Calendar date)
-	{
-		this.date = date;
-	}
+        int daysBetween = Days.daysBetween(
+                today.toLocalDate(), mostRecentDiaryDay.getDate().toLocalDate()).getDays();
+        return daysBetween == 0 ? mostRecentDiaryDay : null;
+    }
+
 }
