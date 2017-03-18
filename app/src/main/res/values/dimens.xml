@@ -9,4 +9,5 @@
 
     <dimen name="card_label_header_font_size">16sp</dimen>
     <dimen name="card_content_font_size">16sp</dimen>
+    <dimen name="text_spacer">5dp</dimen>
 </resources>

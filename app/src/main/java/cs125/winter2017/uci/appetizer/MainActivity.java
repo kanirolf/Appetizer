@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiary;
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay;
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
@@ -104,38 +106,43 @@ public class MainActivity extends AppCompatActivity
                     .setText(foodDiaryDay.getHumanReadableDate());
 
             for (FoodDiaryEntry entry : foodDiaryDay){
-                LinearLayout diaryDayCard = (LinearLayout) layoutInflater.inflate(
+                final LinearLayout diaryDayCard = (LinearLayout) layoutInflater.inflate(
                         R.layout.layout_diary_day_card, null);
                 ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_name))
                         .setText(entry.getName());
                 ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_calories))
-                        .setText(String.format("%s cals", (int)entry.getCalorie()));
+                        .setText(String.format("%s", (int)entry.getCalorie()));
 
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_fat))
-                        .setText(String.format("%s g", (int)entry.getFat()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_cholesterol))
-                        .setText(String.format("%s mg", (int)entry.getCholesterol()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_sodium))
-                        .setText(String.format("%s mg", (int)entry.getSodium()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_carbohydrates))
-                        .setText(String.format("%s g", (int)entry.getCarbs()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_fiber))
-                        .setText(String.format("%s g", (int)entry.getFiber()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_sugar))
-                        .setText(String.format("%s g", (int)entry.getSugar()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_protein))
-                        .setText(String.format("%s g", (int)entry.getProtein()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_fat_value))
+                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getFat()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_cholesterol_value))
+                        .setText(String.format(Locale.getDefault(), "%.1f",  entry.getCholesterol()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_sodium_value))
+                        .setText(String.format(Locale.getDefault(), "%.1f",  entry.getSodium()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_carbohydrates_value))
+                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getCarbs()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_fiber_value))
+                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getFiber()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_sugar_value))
+                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getSugar()));
+                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_protein_value))
+                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getProtein()));
 
                 final FrameLayout nutrientView =
                         (FrameLayout) diaryDayCard.findViewById(R.id.diary_day_card_nutrients);
                 // TODO: go to the entry page when clicked
+                diaryDayCard.setActivated(false);
                 diaryDayCard.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (nutrientView.getVisibility() == View.GONE)
+                        if (nutrientView.getVisibility() == View.GONE) {
                             nutrientView.setVisibility(View.VISIBLE);
-                        else
+                            diaryDayCard.setActivated(true);
+                        } else
+                        {
                             nutrientView.setVisibility(View.GONE);
+                            diaryDayCard.setActivated(false);
+                        }
                     }
                 });
                 diaryDay.addView(diaryDayCard);

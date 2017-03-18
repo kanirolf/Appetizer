@@ -7,4 +7,33 @@
     <string name="action_settings">Settings</string>
 
     <string name="diary_feed_empty">You currently have no entries in your Diary.</string>
+
+    <!-- A zero (0). Literally. -->
+    <string name="zero">0</string>
+
+    <!-- Labels for nutrients -->
+    <string name="calorie_label_short">cal</string>
+    <string name="fat_label">Fat</string>
+    <string name="protein_label">Protein</string>
+    <string name="cholesterol_label">Cholesterol</string>
+    <string name="sugar_label">Sugar</string>
+    <string name="carbohydrates_label">Carbohydrates</string>
+    <string name="sodium_label">Sodium</string>
+    <string name="fiber_label">Fiber</string>
+
+    <!-- Units used for nutrients -->
+    <string name="calorie_units">cals</string>
+    <string name="fat_units">@string/gram_units</string>
+    <string name="protein_units">@string/gram_units</string>
+    <string name="cholesterol_units">@string/milligram_units</string>
+    <string name="sugar_units">@string/gram_units</string>
+    <string name="carbohydrates_units">@string/gram_units</string>
+    <string name="fiber_units">@string/gram_units</string>
+    <string name="sodium_units">@string/milligram_units</string>
+
+    <!-- Display strings for units -->
+    <string name="gram_units">g</string>
+    <string name="milligram_units">mg</string>
+
+
 </resources>
