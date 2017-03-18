@@ -51,14 +51,17 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/current_calories"
+                            android:id="@+id/diary_overview_nutrient_value"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
                             android:fontFamily="sans-serif-condensed"
-                            android:textSize="36sp"
+                            android:textSize="36sp" />
 
-                            android:text="1500" />
+                        <android.support.v4.widget.Space
+                            android:layout_width="@dimen/text_spacer"
+                            android:layout_height="wrap_content" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -67,26 +70,34 @@
                             android:fontFamily="sans-serif-condensed"
                             android:textSize="@dimen/card_content_font_size"
 
-                            android:text=" / " />
+                            android:text="@string/slash" />
+
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="@dimen/text_spacer"
+                            android:layout_height="wrap_content" />
 
                         <TextView
-                            android:id="@+id/target_calories"
+                            android:id="@+id/diary_overview_nutrient_target"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
                             android:fontFamily="sans-serif-condensed"
-                            android:textSize="@dimen/card_content_font_size"
+                            android:textSize="@dimen/card_content_font_size" />
 
-                            android:text="2000" />
+                        <android.support.v4.widget.Space
+                            android:layout_width="@dimen/text_spacer"
+                            android:layout_height="wrap_content" />
 
                         <TextView
+                            android:id="@+id/diary_overview_nutrient_units"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
                             android:fontFamily="sans-serif-condensed"
-                            android:textSize="@dimen/card_content_font_size"
-
-                            android:text=" KCal" />
+                            android:textSize="@dimen/card_content_font_size" />
 
                     </LinearLayout>
 

@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity
 
     private LinearLayout diaryFeed;
     private TextView diaryFeedEmpty;
+    private TextView diaryOverviewNutrientValue;
+    private TextView diaryOverviewNutrientTarget;
+    private TextView diaryOverviewNutrientUnits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        diaryOverviewNutrientValue = (TextView) findViewById(R.id.diary_overview_nutrient_value);
+        diaryOverviewNutrientTarget = (TextView) findViewById(R.id.diary_overview_nutrient_target);
+        diaryOverviewNutrientUnits = (TextView) findViewById(R.id.diary_overview_nutrient_units);
+
         diaryFeed = (LinearLayout) findViewById(R.id.diary_feed);
         diaryFeedEmpty = (TextView) diaryFeed.findViewById(R.id.diary_feed_empty);
     }
@@ -50,7 +57,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume(){
         super.onResume();
-        populateFoodDiaryList();
+        updateDiaryOverview();
+        updateFoodDiaryList();
     }
 
     @Override
@@ -87,7 +95,23 @@ public class MainActivity extends AppCompatActivity
         return MockFoodDiary.MOCK_DIARY;
     }
 
-    private void populateFoodDiaryList(){
+    // TODO: add the name of the nutrient you are tracking to the card
+    private void updateDiaryOverview(){
+        FoodDiary foodDiary = this.getFoodDiary();
+        FoodDiaryDay todaysNutrients = foodDiary.getTodaysEntries();
+        if (todaysNutrients != null)
+            diaryOverviewNutrientValue.setText(
+                    String.format(Locale.getDefault(), "%d", (int) todaysNutrients.getCalorie()));
+        else
+            diaryOverviewNutrientValue.setText("0");
+
+        diaryOverviewNutrientTarget.setText(
+                String.format(Locale.getDefault(), "%d", (int) foodDiary.getCalorie()));
+        diaryOverviewNutrientUnits.setText(getString(R.string.calorie_units));
+
+    }
+
+    private void updateFoodDiaryList(){
 
         diaryFeed.removeAllViews();
 
@@ -99,7 +123,7 @@ public class MainActivity extends AppCompatActivity
 
         LayoutInflater layoutInflater = getLayoutInflater();
 
-        for (FoodDiaryDay foodDiaryDay : foodDiary.descendingMap().values()){
+        for (FoodDiaryDay foodDiaryDay : foodDiary.values()){
             LinearLayout diaryDay = (LinearLayout) layoutInflater.inflate(
                     R.layout.layout_diary_day, null);
             ((TextView)diaryDay.findViewById(R.id.diary_day_date))

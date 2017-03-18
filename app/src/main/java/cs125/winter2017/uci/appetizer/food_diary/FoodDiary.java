@@ -1,17 +1,21 @@
 package cs125.winter2017.uci.appetizer.food_diary;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import java.util.Calendar;
 import java.util.Comparator;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class FoodDiary extends TreeMap<DateTime, FoodDiaryDay> implements NutrientFactHolder {
+
+    public static Comparator<DateTime> SAME_DAY_COMPARATOR = new Comparator<DateTime>() {
+        @Override
+        public int compare(DateTime first, DateTime second) {
+            return Days.daysBetween(first.toLocalDate(), second.toLocalDate()).getDays();
+        }
+    };
 
 	private double Calorie;
 	private double Fat;
@@ -24,6 +28,8 @@ public class FoodDiary extends TreeMap<DateTime, FoodDiaryDay> implements Nutrie
 
 	public FoodDiary(int Calorie, int Fat, int Protein, int Cholesterol, int Sugar, int Carbs,
                      int Sodium, int Fiber){
+        super(SAME_DAY_COMPARATOR);
+
         setCalorie(Calorie);
 		setFat(Fat);
 		setProtein(Protein);

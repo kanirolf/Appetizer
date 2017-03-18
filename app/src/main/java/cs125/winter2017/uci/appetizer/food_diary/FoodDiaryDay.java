@@ -3,14 +3,16 @@ package cs125.winter2017.uci.appetizer.food_diary;
 import android.support.annotation.NonNull;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 
+import java.util.Comparator;
 import java.util.TreeSet;
 
 public class FoodDiaryDay extends TreeSet<FoodDiaryEntry> implements NutrientFactHolder {
 
-    private static final DateTimeFormatter HUMAN_READABLE_FORMATTER = new DateTimeFormatterBuilder()
+    public static final DateTimeFormatter HUMAN_READABLE_FORMATTER = new DateTimeFormatterBuilder()
             .appendMonthOfYearText()
             .appendLiteral(' ')
             .appendDayOfMonth(2)
