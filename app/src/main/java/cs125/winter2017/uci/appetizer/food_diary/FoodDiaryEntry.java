@@ -30,6 +30,7 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
     private final @NonNull DateTime date;
 	private @NonNull String Name;
 
+    private int Id;
     private double Servings;
 	private NutrientFacts nutrientFacts;
 
@@ -37,6 +38,7 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
         date = builder.Date;
         Name = builder.Name;
 
+        Id = builder.Id;
         Servings = builder.Servings;
         nutrientFacts = builder.nutrientFacts;
     }
@@ -45,6 +47,7 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
         date = (DateTime) parcel.readSerializable();
         Name = parcel.readString();
 
+        Id = parcel.readInt();
         Servings = parcel.readDouble();
         nutrientFacts = parcel.readParcelable(NutrientFacts.class.getClassLoader());
     }
@@ -59,6 +62,7 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
         private @NonNull DateTime Date;
         private @NonNull String Name;
 
+        private int Id;
         private double Servings;
         private NutrientFacts.Builder nutrientFactsBuilder;
         private NutrientFacts nutrientFacts;
@@ -67,8 +71,14 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
             Date = new DateTime();
             Name = "";
 
+            Id = -1;
             Servings = 1;
             nutrientFactsBuilder = new NutrientFacts.Builder();
+        }
+
+        public Builder setId(int id) {
+            Id = id;
+            return this;
         }
 
         public Builder setDate(@NonNull DateTime date){
@@ -141,6 +151,7 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeSerializable(date);
         dest.writeString(Name);
+        dest.writeInt(Id);
         dest.writeDouble(Servings);
         dest.writeParcelable(nutrientFacts, flags);
     }
@@ -150,6 +161,10 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
                 Integer.toString(date.get(DateTimeFieldType.monthOfYear())) + "-" +
                 Integer.toString(date.get(DateTimeFieldType.dayOfMonth()));
 	}
+
+	public int getId() { return Id; }
+
+    public void setId(int id) { Id = id; }
 
     @NonNull
     public DateTime getDate() {
