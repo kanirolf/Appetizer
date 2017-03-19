@@ -60,6 +60,18 @@ public class FoodDiary {
     public void removeEntry(FoodDiaryDBHelper dbHelper, FoodDiaryEntry entry){
         FoodDiaryDay entryDay = getDay(dbHelper, entry.getDate());
         entryDay.remove(entry);
+
+        if(entry.getId() > -1)
+            dbHelper.deleteEntry(entry.getId());
+    }
+
+    public void editEntry(FoodDiaryDBHelper dbHelper, FoodDiaryEntry entry) {
+        FoodDiaryDay entryDay = getDay(dbHelper, entry.getDate());
+        entryDay.remove(entry);
+        entryDay.add(entry);
+
+        if(entry.getId() > -1)
+            dbHelper.updateEntry(entry);
     }
 
     @NonNull
@@ -86,6 +98,8 @@ public class FoodDiary {
 
         return foodDiaryDays;
     }
+
+
 
     // TODO: load the thing from disk
     @Nullable

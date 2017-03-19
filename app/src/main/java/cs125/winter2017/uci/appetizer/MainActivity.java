@@ -151,6 +151,8 @@ public class MainActivity extends AppCompatActivity
                         entryToEdit.setProtein(entry.getProtein());
                         entryToEdit.setSodium(entry.getSodium());
                         entryToEdit.setSugar(entry.getSugar());
+
+                        FoodDiary.getInstance().editEntry(dbHelper, entryToEdit);
                     }
                     entryToEdit = null;
                 }
