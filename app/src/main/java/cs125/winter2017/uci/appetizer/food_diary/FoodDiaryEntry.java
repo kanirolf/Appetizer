@@ -59,7 +59,7 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
         private @NonNull DateTime Date;
         private @NonNull String Name;
 
-        private int Servings;
+        private double Servings;
         private NutrientFacts.Builder nutrientFactsBuilder;
         private NutrientFacts nutrientFacts;
 
@@ -81,7 +81,7 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
             return this;
         }
 
-        public Builder setServings(int servings) {
+        public Builder setServings(double servings) {
             Servings = servings;
             return this;
         }

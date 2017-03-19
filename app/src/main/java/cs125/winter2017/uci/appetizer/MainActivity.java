@@ -19,6 +19,7 @@ import java.util.Locale;
 
 import cs125.winter2017.uci.appetizer.daily_targets.DailyTargets;
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiary;
+import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDBHelper;
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay;
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
 
@@ -38,12 +39,16 @@ public class MainActivity extends AppCompatActivity
 
     private FoodDiaryEntry entryToEdit;
 
+    private FoodDiaryDBHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dbHelper = new FoodDiaryDBHelper(this);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -130,12 +135,12 @@ public class MainActivity extends AppCompatActivity
 
         switch (requestCode) {
             case NEW_ENTRY:
-                FoodDiary.getInstance().addEntry(entry);
+                FoodDiary.getInstance().addEntry(dbHelper, entry);
                 break;
             case EDIT_ENTRY:
                 if (entryToEdit != null) {
                     if (delete)
-                        FoodDiary.getInstance().removeEntry(entryToEdit);
+                        FoodDiary.getInstance().removeEntry(dbHelper, entryToEdit);
                     else {
                         entryToEdit.setName(entry.getName());
                         entryToEdit.setCalorie(entry.getCalorie());
@@ -155,7 +160,7 @@ public class MainActivity extends AppCompatActivity
 
     // TODO: add the name of the nutrient you are tracking to the card
     private void updateDiaryOverview(){
-        FoodDiaryDay todaysNutrients = FoodDiary.getInstance().getTodaysEntries();
+        FoodDiaryDay todaysNutrients = FoodDiary.getInstance().getTodaysEntries(dbHelper);
         diaryOverviewNutrientValue.setText(
                 String.format(Locale.getDefault(), "%d", (int) todaysNutrients.getCalorie()));
 
