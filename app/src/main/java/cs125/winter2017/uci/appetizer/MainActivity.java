@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity
                                 data.putDouble("PROTEIN", entryToEdit.getProtein());
                                 data.putDouble("CHOLESTEROL", entryToEdit.getCholesterol());
                                 data.putDouble("SUGAR", entryToEdit.getSugar());
-                                data.putDouble("CARBOHYDRATES", entryToEdit.getCarbs());
+                                data.putDouble("CARBOHYDRATE", entryToEdit.getCarbs());
                                 data.putDouble("SODIUM", entryToEdit.getSodium());
                                 data.putDouble("FIBER", entryToEdit.getFiber());
 
