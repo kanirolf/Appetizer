@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity
                         entryToEdit.setProtein(entryData.getDouble("PROTEIN"));
                         entryToEdit.setSodium(entryData.getDouble("SODIUM"));
                         entryToEdit.setSugar(entryData.getDouble("SUGAR"));
-                        entryToEdit = null;
                     }
+                    entryToEdit = null;
                 }
                 break;
         }
