@@ -30,6 +30,8 @@
                     android:layout_gravity="left">
 
                     <ImageView
+                        android:id="@+id/diary_day_card_edit"
+
                         android:layout_width="@dimen/card_content_font_size"
                         android:layout_height="@dimen/card_content_font_size"
 

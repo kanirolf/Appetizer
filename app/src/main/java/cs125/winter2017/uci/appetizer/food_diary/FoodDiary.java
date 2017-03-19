@@ -121,6 +121,11 @@ public class FoodDiary {
         entries.put(day.getDate(), day);
     }
 
+    public void removeEntry(FoodDiaryEntry entry){
+        FoodDiaryDay entryDay = getDay(entry.getDate());
+        entryDay.remove(entry);
+    }
+
     @NonNull
     public FoodDiaryDay getDay(DateTime date){
         FoodDiaryDay day = entries.get(date);
