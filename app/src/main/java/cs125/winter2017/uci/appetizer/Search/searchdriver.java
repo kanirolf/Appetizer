@@ -11,7 +11,7 @@ public class searchdriver {
         ArrayList<MenuItem> items = sm.search();
 
 
-//        Search_Places temp = new Search_Places("burgers", 33.6825773, -117.8140463,5000,-1,"restaurant","snack",false);
+//        Search_Places temp = new Search_Places("burgers", 33.6825773, -117.8140463,5000,-1,"snack");
 //        String jsonresult = temp.search();
 //        JsonElement parser = new JsonParser().parse(jsonresult);
 //        JsonObject jsobject = parser.getAsJsonObject();
