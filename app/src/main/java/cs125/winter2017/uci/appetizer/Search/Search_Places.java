@@ -1,17 +1,13 @@
 package cs125.winter2017.uci.appetizer.Search;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStream;
+
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import org.json.*;
-/**
- * Created by Andrew on 3/11/2017.
- */
+
+
 
 public class Search_Places{
 
