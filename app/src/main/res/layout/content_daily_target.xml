@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cs125.winter2017.uci.appetizer.DailyTargetActivity"
+    tools:context="cs125.winter2017.uci.appetizer.daily_targets.DailyTargetActivity"
     tools:showIn="@layout/app_bar_daily_target"
     android:focusableInTouchMode="true">
 
@@ -39,7 +39,7 @@
                     <fragment
                         android:id="@+id/daily_target_editor"
 
-                        android:name="cs125.winter2017.uci.appetizer.NutrientEditorFragment"
+                        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment"
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cs125.winter2017.uci.appetizer.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:context="cs125.winter2017.uci.appetizer.food_diary.DiaryActivity"
+    tools:showIn="@layout/app_bar_diary">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package cs125.winter2017.uci.appetizer;
+package cs125.winter2017.uci.appetizer.Search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import cs125.winter2017.uci.appetizer.R;
+import cs125.winter2017.uci.appetizer.daily_targets.DailyTargetActivity;
+import cs125.winter2017.uci.appetizer.food_diary.DiaryActivity;
 import cs125.winter2017.uci.appetizer.location.GetLocationFragment;
 
 public class SearchActivity extends AppCompatActivity
@@ -65,7 +68,7 @@ public class SearchActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_home:
-                Intent mainActivityIntent = new Intent(this, MainActivity.class);
+                Intent mainActivityIntent = new Intent(this, DiaryActivity.class);
                 startActivity(mainActivityIntent);
                 break;
             case R.id.nav_daily_targets:

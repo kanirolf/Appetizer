@@ -1,4 +1,4 @@
-package cs125.winter2017.uci.appetizer;
+package cs125.winter2017.uci.appetizer.nutrients;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import java.util.Locale;
 
+import cs125.winter2017.uci.appetizer.R;
 import cs125.winter2017.uci.appetizer.databinding.FragmentNutrientSingleValueEditorBinding;
 
 public class NutrientSingleValueEditorFragment extends Fragment implements TextWatcher,

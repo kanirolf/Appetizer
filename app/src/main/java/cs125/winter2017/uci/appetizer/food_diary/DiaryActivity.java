@@ -1,4 +1,4 @@
-package cs125.winter2017.uci.appetizer;
+package cs125.winter2017.uci.appetizer.food_diary;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,13 +17,12 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import cs125.winter2017.uci.appetizer.R;
+import cs125.winter2017.uci.appetizer.Search.SearchActivity;
+import cs125.winter2017.uci.appetizer.daily_targets.DailyTargetActivity;
 import cs125.winter2017.uci.appetizer.daily_targets.DailyTargets;
-import cs125.winter2017.uci.appetizer.food_diary.FoodDiary;
-import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDBHelper;
-import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay;
-import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
 
-public class MainActivity extends AppCompatActivity
+public class DiaryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DiaryDayFragment.OnDiaryDayEditListener {
 
     private static final int NEW_ENTRY = 0;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_diary);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         diaryAddEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent addEntryIntent = new Intent(MainActivity.this, DiaryEntryActivity.class);
+                Intent addEntryIntent = new Intent(DiaryActivity.this, DiaryEntryActivity.class);
                 addEntryIntent.putExtra(DiaryEntryActivity.EDITING_ENTRY, false);
                 startActivityForResult(addEntryIntent, NEW_ENTRY);
             }

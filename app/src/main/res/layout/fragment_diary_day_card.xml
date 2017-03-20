@@ -8,7 +8,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="cs125.winter2017.uci.appetizer.DiaryDayCardFragment">
+        tools:context="cs125.winter2017.uci.appetizer.food_diary.DiaryDayCardFragment">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                     <fragment
                         android:id="@+id/diary_day_card_nutrients"
 
-                        android:name="cs125.winter2017.uci.appetizer.NutrientEditorFragment"
+                        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment"
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />

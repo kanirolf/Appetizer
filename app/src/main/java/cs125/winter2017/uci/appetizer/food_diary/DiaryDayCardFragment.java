@@ -1,4 +1,4 @@
-package cs125.winter2017.uci.appetizer;
+package cs125.winter2017.uci.appetizer.food_diary;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,8 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment;
+import cs125.winter2017.uci.appetizer.R;
 import cs125.winter2017.uci.appetizer.databinding.FragmentDiaryDayCardBinding;
-import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
 
 public class DiaryDayCardFragment extends Fragment implements View.OnClickListener {
 

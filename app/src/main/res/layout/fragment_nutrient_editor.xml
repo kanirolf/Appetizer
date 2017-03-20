@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    tools:context="cs125.winter2017.uci.appetizer.NutrientEditorFragment"
+    tools:context="cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment"
 
     android:orientation="vertical"
 
@@ -13,7 +13,7 @@
     <fragment
         android:id="@+id/editor_calories"
 
-        android:name="cs125.winter2017.uci.appetizer.NutrientSingleValueEditorFragment"
+        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/editor_fat"
 
-        android:name="cs125.winter2017.uci.appetizer.NutrientSingleValueEditorFragment"
+        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/editor_protein"
 
-        android:name="cs125.winter2017.uci.appetizer.NutrientSingleValueEditorFragment"
+        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
     <fragment
         android:id="@+id/editor_cholesterol"
 
-        android:name="cs125.winter2017.uci.appetizer.NutrientSingleValueEditorFragment"
+        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
     <fragment
         android:id="@+id/editor_sugar"
 
-        android:name="cs125.winter2017.uci.appetizer.NutrientSingleValueEditorFragment"
+        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/editor_carbohydrate"
 
-        android:name="cs125.winter2017.uci.appetizer.NutrientSingleValueEditorFragment"
+        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
     <fragment
         android:id="@+id/editor_sodium"
 
-        android:name="cs125.winter2017.uci.appetizer.NutrientSingleValueEditorFragment"
+        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
     <fragment
         android:id="@+id/editor_fiber"
 
-        android:name="cs125.winter2017.uci.appetizer.NutrientSingleValueEditorFragment"
+        android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

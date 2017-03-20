@@ -1,4 +1,4 @@
-package cs125.winter2017.uci.appetizer;
+package cs125.winter2017.uci.appetizer.nutrients;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cs125.winter2017.uci.appetizer.nutrients.NutrientFactHolder;
+import cs125.winter2017.uci.appetizer.R;
 
 public class NutrientEditorFragment extends Fragment implements NutrientFactHolder,
         NutrientSingleValueEditorFragment.OnValueEditListener {

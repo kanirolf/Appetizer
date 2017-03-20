@@ -1,4 +1,4 @@
-package cs125.winter2017.uci.appetizer;
+package cs125.winter2017.uci.appetizer.daily_targets;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,7 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import cs125.winter2017.uci.appetizer.daily_targets.DailyTargets;
+import cs125.winter2017.uci.appetizer.food_diary.DiaryActivity;
+import cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment;
+import cs125.winter2017.uci.appetizer.R;
+import cs125.winter2017.uci.appetizer.Search.SearchActivity;
 
 public class DailyTargetActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -98,7 +101,7 @@ public class DailyTargetActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.nav_home:
-                moveAwayIntent = new Intent(this, MainActivity.class);
+                moveAwayIntent = new Intent(this, DiaryActivity.class);
                 break;
             case R.id.nav_search:
                 moveAwayIntent = new Intent(this, SearchActivity.class);

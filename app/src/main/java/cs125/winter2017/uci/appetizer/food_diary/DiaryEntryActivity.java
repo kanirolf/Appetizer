@@ -1,4 +1,4 @@
-package cs125.winter2017.uci.appetizer;
+package cs125.winter2017.uci.appetizer.food_diary;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -18,11 +18,8 @@ import android.widget.TextView;
 
 import org.joda.time.DateTime;
 
-import java.util.Locale;
-
-import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay;
-import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
-import cs125.winter2017.uci.appetizer.nutrients.NutrientFacts;
+import cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment;
+import cs125.winter2017.uci.appetizer.R;
 
 public class DiaryEntryActivity extends AppCompatActivity implements
         DatePickerDialog.OnDateSetListener {
@@ -30,7 +27,7 @@ public class DiaryEntryActivity extends AppCompatActivity implements
 
     public static final String ENTRY = "ENTRY";
     public static final String EDITING_ENTRY =
-            "cs125.winter2017.uci.appetizer.DiaryEntryActivity.EDITING_ENTRY";
+            "cs125.winter2017.uci.appetizer.food_diary.DiaryEntryActivity.EDITING_ENTRY";
 
     private NutrientEditorFragment nutrientEditor;
 
