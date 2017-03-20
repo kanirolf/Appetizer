@@ -1,4 +1,4 @@
-package cs125.winter2017.uci.appetizer.food_diary;
+package cs125.winter2017.uci.appetizer.nutrients;
 
 public interface NutrientFactHolder {
     double getCalorie();

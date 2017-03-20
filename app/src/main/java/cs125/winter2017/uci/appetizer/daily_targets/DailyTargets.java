@@ -3,84 +3,94 @@ package cs125.winter2017.uci.appetizer.daily_targets;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public final class DailyTargets {
-    private DailyTargets(){}
+import cs125.winter2017.uci.appetizer.nutrients.NutrientFactHolder;
+
+public class DailyTargets implements NutrientFactHolder {
 
     private static final String PREF_FILE = "cs125.winter2017.uci.appetizer.DAILY_TARGETS";
 
-    private static SharedPreferences getDailyTargetsPrefs(Context context){
-        return context.getSharedPreferences(PREF_FILE, 0);
+    public static DailyTargets loadFromContext(Context context){
+        return new DailyTargets(context);
     }
 
-    public static double getCalorie(Context context) {
-        return Double.longBitsToDouble(getDailyTargetsPrefs(context).getLong("calorie", 0));
+    private final Context context;
+    private final SharedPreferences dailyTargetPrefs;
+
+    private DailyTargets(Context context){
+        this.context = context;
+        this.dailyTargetPrefs = context.getSharedPreferences(PREF_FILE, 0);
     }
 
-    public static void setCalorie(Context context, double calorie) {
-        getDailyTargetsPrefs(context).edit()
-                .putLong("calorie", Double.doubleToRawLongBits(calorie)).apply();
+    @Override
+    public double getCalorie() {
+        return Double.longBitsToDouble(dailyTargetPrefs.getLong("calorie", 0));
     }
 
-    public static double getFat(Context context) {
-        return Double.longBitsToDouble(getDailyTargetsPrefs(context).getLong("fat", 0));
+    public void setCalorie(double calorie) {
+        dailyTargetPrefs.edit() .putLong("calorie", Double.doubleToRawLongBits(calorie)).apply();
     }
 
-    public static void setFat(Context context, double fat) {
-        getDailyTargetsPrefs(context).edit().putLong("fat", Double.doubleToRawLongBits(fat))
-            .apply();
+    @Override
+    public double getFat() {
+        return Double.longBitsToDouble(dailyTargetPrefs.getLong("fat", 0));
     }
 
-    public static double getProtein(Context context) {
-        return Double.longBitsToDouble(getDailyTargetsPrefs(context).getLong("protein", 0));
+    public void setFat(double fat) {
+        dailyTargetPrefs.edit().putLong("fat", Double.doubleToRawLongBits(fat)).apply();
     }
 
-    public static void setProtein(Context context, double protein) {
-        getDailyTargetsPrefs(context).edit().putLong("protein", Double.doubleToRawLongBits(protein))
-            .apply();
+    @Override
+    public double getProtein() {
+        return Double.longBitsToDouble(dailyTargetPrefs.getLong("protein", 0));
     }
 
-    public static double getCholesterol(Context context) {
-        return Double.longBitsToDouble(getDailyTargetsPrefs(context).getLong("cholesterol", 0));
+    public void setProtein(double protein) {
+        dailyTargetPrefs.edit().putLong("protein", Double.doubleToRawLongBits(protein)).apply();
     }
 
-    public static void setCholesterol(Context context, double cholesterol) {
-        getDailyTargetsPrefs(context).edit().putLong("cholesterol",
+    @Override
+    public double getCholesterol() {
+        return Double.longBitsToDouble(dailyTargetPrefs.getLong("cholesterol", 0));
+    }
+
+    public void setCholesterol(double cholesterol) {
+        dailyTargetPrefs.edit().putLong("cholesterol",
                 Double.doubleToRawLongBits(cholesterol)).apply();
     }
 
-    public static double getSugar(Context context) {
-        return Double.longBitsToDouble(getDailyTargetsPrefs(context).getLong("sugar", 0));
+    @Override
+    public double getSugar() {
+        return Double.longBitsToDouble(dailyTargetPrefs.getLong("sugar", 0));
     }
 
-    public static void setSugar(Context context, double sugar) {
-        getDailyTargetsPrefs(context).edit().putLong("sugar", Double.doubleToRawLongBits(sugar))
-                .apply();
+    public void setSugar(double sugar) {
+        dailyTargetPrefs.edit().putLong("sugar", Double.doubleToRawLongBits(sugar)).apply();
     }
 
-    public static double getCarbs(Context context) {
-        return Double.longBitsToDouble(getDailyTargetsPrefs(context).getLong("carbohydrates", 0));
+    @Override
+    public double getCarbs() {
+        return Double.longBitsToDouble(dailyTargetPrefs.getLong("carbohydrates", 0));
     }
 
-    public static void setCarbs(Context context, double carbs) {
-        getDailyTargetsPrefs(context).edit().putLong("carbohydrates",
-                Double.doubleToRawLongBits(carbs)).apply();
+    public void setCarbs(double carbs) {
+        dailyTargetPrefs.edit().putLong("carbohydrates", Double.doubleToRawLongBits(carbs)).apply();
     }
 
-    public static double getSodium(Context context) {
-        return Double.longBitsToDouble(getDailyTargetsPrefs(context).getLong("sodium", 0));
+    @Override
+    public double getSodium() {
+        return Double.longBitsToDouble(dailyTargetPrefs.getLong("sodium", 0));
     }
 
-    public static void setSodium(Context context, double sodium) {
-        getDailyTargetsPrefs(context).edit().putLong("sodium", Double.doubleToRawLongBits(sodium))
-                .apply();
+    public void setSodium(double sodium) {
+        dailyTargetPrefs.edit().putLong("sodium", Double.doubleToRawLongBits(sodium)).apply();
     }
 
-    public static double getFiber(Context context) {
-        return Double.longBitsToDouble(getDailyTargetsPrefs(context).getLong("fiber", 0));
+    @Override
+    public double getFiber() {
+        return Double.longBitsToDouble(dailyTargetPrefs.getLong("fiber", 0));
     }
 
-    public static void setFiber(Context context, double fiber) {
-        getDailyTargetsPrefs(context).edit().putLong("fiber", Double.doubleToRawLongBits(fiber))
-                .apply();
+    public void setFiber(double fiber) {
+        dailyTargetPrefs.edit().putLong("fiber", Double.doubleToRawLongBits(fiber)).apply();
     }
 }

@@ -1,40 +1,29 @@
 package cs125.winter2017.uci.appetizer;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.DefaultDatabaseErrorHandler;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import java.util.Locale;
+import android.view.View;
 
 import cs125.winter2017.uci.appetizer.daily_targets.DailyTargets;
 
 public class DailyTargetActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        NutrientEditorFragment.OnNutrientsEditListener {
 
-    EditText caloriesField;
-    EditText fatField;
-    EditText proteinField;
-    EditText cholesterolField;
-    EditText sugarField;
-    EditText carbohydratesField;
-    EditText sodiumField;
-    EditText fiberField;
+    private NutrientEditorFragment nutrientEditor;
+
+    private DailyTargets dailyTargets;
+
+    private boolean changed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,36 +41,26 @@ public class DailyTargetActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        caloriesField = (EditText) findViewById(R.id.daily_target_calorie);
-        caloriesField.addTextChangedListener(new FieldWatcher(caloriesField));
+        nutrientEditor = (NutrientEditorFragment)
+                getSupportFragmentManager().findFragmentById(R.id.daily_target_editor);
+        nutrientEditor.setEditable(true);
+        nutrientEditor.setEditListener(this);
 
-        fatField = (EditText) findViewById(R.id.daily_target_fat);
-        fatField.addTextChangedListener(new FieldWatcher(fatField));
+        findViewById(R.id.daily_target_edit_submit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSubmit();
+            }
+        });
 
-        proteinField = (EditText) findViewById(R.id.daily_target_protein);
-        proteinField.addTextChangedListener(new FieldWatcher(proteinField));
-
-        cholesterolField = (EditText) findViewById(R.id.daily_target_cholesterol);
-        cholesterolField.addTextChangedListener(new FieldWatcher(cholesterolField));
-
-        sugarField = (EditText) findViewById(R.id.daily_target_sugar);
-        sugarField.addTextChangedListener(new FieldWatcher(sugarField));
-
-        carbohydratesField = (EditText) findViewById(R.id.daily_target_carbohydrates);
-        carbohydratesField.addTextChangedListener(new FieldWatcher(carbohydratesField));
-
-        sodiumField = (EditText) findViewById(R.id.daily_target_sodium);
-        sodiumField.addTextChangedListener(new FieldWatcher(sodiumField));
-
-        fiberField = (EditText) findViewById(R.id.daily_target_fiber);
-        fiberField.addTextChangedListener(new FieldWatcher(fiberField));
     }
 
     @Override
     public void onResume(){
         super.onResume();
 
-        updateFields();
+        dailyTargets = DailyTargets.loadFromContext(this);
+        nutrientEditor.setValue(dailyTargets);
     }
 
     @Override
@@ -89,22 +68,63 @@ public class DailyTargetActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        } else if (changed) {
+            new AlertDialog.Builder(this)
+                    .setMessage("There are unsaved changes to the nutrient targets. Leave anyway?")
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DailyTargetActivity.super.onBackPressed();
+                        }
+                    })
+                    .setNegativeButton(R.string.alert_cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    })
+                    .create()
+                    .show();
+        } else
             super.onBackPressed();
-        }
+
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Intent moveAwayIntent = null;
+
         switch (item.getItemId()){
             case R.id.nav_home:
-                Intent homeIntent = new Intent(this, MainActivity.class);
-                startActivity(homeIntent);
+                moveAwayIntent = new Intent(this, MainActivity.class);
                 break;
             case R.id.nav_search:
+                moveAwayIntent = new Intent(this, RestaurantSearchActivity.class);
                 break;
+        }
+
+        if (moveAwayIntent != null) {
+            final Intent continueIntent = moveAwayIntent;
+            if (changed)
+                new AlertDialog.Builder(this)
+                        .setMessage("There are unsaved changes to the nutrient targets. Leave anyway?")
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DailyTargetActivity.this.startActivity(continueIntent);
+                            }
+                        })
+                        .setNegativeButton(R.string.alert_cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .create()
+                        .show();
+             else
+                 startActivity(continueIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -112,75 +132,32 @@ public class DailyTargetActivity extends AppCompatActivity
         return true;
     }
 
-    private void updateFields(){
-        caloriesField.setText(String.format(Locale.getDefault(), "%.1f",
-                DailyTargets.getCalorie(this)));
-        fatField.setText(String.format(Locale.getDefault(), "%.1f",
-                DailyTargets.getFat(this)));
-        proteinField.setText(String.format(Locale.getDefault(), "%.1f",
-                DailyTargets.getProtein(this)));
-        cholesterolField.setText(String.format(Locale.getDefault(), "%.1f",
-                DailyTargets.getCholesterol(this)));
-        sugarField.setText(String.format(Locale.getDefault(), "%.1f",
-                DailyTargets.getSugar(this)));
-        carbohydratesField.setText(String.format(Locale.getDefault(), "%.1f",
-                DailyTargets.getCarbs(this)));
-        sodiumField.setText(String.format(Locale.getDefault(), "%.1f",
-                DailyTargets.getSodium(this)));
-        fiberField.setText(String.format(Locale.getDefault(), "%.1f",
-                DailyTargets.getFiber(this)));
+    @Override
+    public void onNutrientEdit(String nutrient, double value) {
+        changed = true;
     }
 
-    private static class FieldWatcher implements TextWatcher {
+    public void onSubmit(){
 
-        private final EditText view;
-        private FieldWatcher(EditText view){
-            this.view = view;
-        }
+        dailyTargets.setCalorie(nutrientEditor.getCalorie());
+        dailyTargets.setFat(nutrientEditor.getFat());
+        dailyTargets.setProtein(nutrientEditor.getProtein());
+        dailyTargets.setCholesterol(nutrientEditor.getCholesterol());
+        dailyTargets.setSugar(nutrientEditor.getSugar());
+        dailyTargets.setCarbs(nutrientEditor.getCarbs());
+        dailyTargets.setSodium(nutrientEditor.getSodium());
+        dailyTargets.setFiber(nutrientEditor.getFiber());
 
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            Context viewContext = view.getContext();
-            String valueString = editable.toString();
-            if (valueString.isEmpty())
-                editable.append("0");
-            double value = Double.parseDouble(editable.toString());
-
-            switch (view.getId()){
-                case R.id.daily_target_calorie:
-                    DailyTargets.setCalorie(viewContext, value);
-                    break;
-                case R.id.daily_target_fat:
-                    DailyTargets.setFat(viewContext, value);
-                    break;
-                case R.id.daily_target_protein:
-                    DailyTargets.setProtein(viewContext, value);
-                    break;
-                case R.id.daily_target_cholesterol:
-                    DailyTargets.setCholesterol(viewContext, value);
-                    break;
-                case R.id.daily_target_sugar:
-                    DailyTargets.setSugar(viewContext, value);
-                    break;
-                case R.id.daily_target_carbohydrates:
-                    DailyTargets.setCarbs(viewContext, value);
-                    break;
-                case R.id.daily_target_sodium:
-                    DailyTargets.setSodium(viewContext, value);
-                    break;
-                case R.id.daily_target_fiber:
-                    DailyTargets.setFat(viewContext, value);
-                    break;
-            }
-
-
-        }
+        new AlertDialog.Builder(this)
+            .setMessage(R.string.daily_targets_saved)
+            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    changed = false;
+                }
+            })
+            .create()
+            .show();
     }
 
 }

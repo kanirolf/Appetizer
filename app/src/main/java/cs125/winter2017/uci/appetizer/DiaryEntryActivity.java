@@ -22,23 +22,20 @@ import java.util.Locale;
 
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay;
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
+import cs125.winter2017.uci.appetizer.nutrients.NutrientFacts;
 
 public class DiaryEntryActivity extends AppCompatActivity implements
         DatePickerDialog.OnDateSetListener {
 
+
+    public static final String ENTRY = "ENTRY";
     public static final String EDITING_ENTRY =
             "cs125.winter2017.uci.appetizer.DiaryEntryActivity.EDITING_ENTRY";
 
+    private NutrientEditorFragment nutrientEditor;
+
     private EditText nameField;
     private TextView dateField;
-    private EditText calorieField;
-    private EditText fatField;
-    private EditText proteinField;
-    private EditText cholesterolField;
-    private EditText sugarField;
-    private EditText carbohydrateField;
-    private EditText sodiumField;
-    private EditText fiberField;
 
     private DateTime date;
 
@@ -54,41 +51,23 @@ public class DiaryEntryActivity extends AppCompatActivity implements
 
         nameField = (EditText) findViewById(R.id.diary_entry_edit_name);
         dateField = (TextView) findViewById(R.id.diary_entry_edit_date);
-        calorieField = (EditText) findViewById(R.id.diary_entry_edit_calorie);
-        fatField = (EditText) findViewById(R.id.diary_entry_edit_fat);
-        proteinField = (EditText) findViewById(R.id.diary_entry_edit_protein);
-        cholesterolField = (EditText) findViewById(R.id.diary_entry_edit_cholesterol);
-        sugarField = (EditText) findViewById(R.id.diary_entry_edit_sugar);
-        carbohydrateField = (EditText) findViewById(R.id.diary_entry_edit_carbohydrates);
-        sodiumField = (EditText) findViewById(R.id.diary_entry_edit_sodium);
-        fiberField = (EditText) findViewById(R.id.diary_entry_edit_fiber);
+
+        nutrientEditor = (NutrientEditorFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.diary_entry_editor);
+        nutrientEditor.setEditable(true);
 
         if (getIntent().getBooleanExtra(EDITING_ENTRY, false)){
             getSupportActionBar().setTitle(getString(R.string.title_activity_diary_entry_edit));
 
-            Bundle data = getIntent().getBundleExtra("DATA");
+            FoodDiaryEntry entry = getIntent().getParcelableExtra(ENTRY);
 
-            nameField.setText(data.getString("NAME"));
+            nameField.setText(entry.getName());
 
-            date = (DateTime) data.getSerializable("DATE");
+            date = (DateTime) entry.getDate();
             dateField.setText(FoodDiaryDay.HUMAN_READABLE_FORMATTER.print(date));
             dateField.setBackground(null);
 
-            calorieField.setText(
-                    String.format(Locale.getDefault(), "%.2f", data.getDouble("CALORIE")));
-            fatField.setText(String.format(Locale.getDefault(), "%.2f", data.getDouble("FAT")));
-            proteinField.setText(
-                    String.format(Locale.getDefault(), "%.2f", data.getDouble("PROTEIN")));
-            cholesterolField.setText(
-                    String.format(Locale.getDefault(), "%.2f", data.getDouble("CHOLESTEROL")));
-            sugarField.setText(
-                    String.format(Locale.getDefault(), "%.2f", data.getDouble("SUGAR")));
-            carbohydrateField.setText(
-                    String.format(Locale.getDefault(), "%.2f", data.getDouble("CARBOHYDRATE")));
-            sodiumField.setText(
-                    String.format(Locale.getDefault(), "%.2f", data.getDouble("SODIUM")));
-            fiberField.setText(
-                    String.format(Locale.getDefault(), "%.2f", data.getDouble("FIBER")));
+            nutrientEditor.setValue(entry);
         } else {
             getSupportActionBar().setTitle(getString(R.string.title_activity_diary_entry_new));
 
@@ -107,22 +86,6 @@ public class DiaryEntryActivity extends AppCompatActivity implements
 
                 }
             });
-
-            calorieField.setText(
-                    String.format(Locale.getDefault(), "%.2f", 0f));
-            fatField.setText(String.format(Locale.getDefault(), "%.2f", 0f));
-            proteinField.setText(
-                    String.format(Locale.getDefault(), "%.2f", 0f));
-            cholesterolField.setText(
-                    String.format(Locale.getDefault(), "%.2f", 0f));
-            sugarField.setText(
-                    String.format(Locale.getDefault(), "%.2f", 0f));
-            carbohydrateField.setText(
-                    String.format(Locale.getDefault(), "%.2f", 0f));
-            sodiumField.setText(
-                    String.format(Locale.getDefault(), "%.2f", 0f));
-            fiberField.setText(
-                    String.format(Locale.getDefault(), "%.2f", 0f));
         }
 
         findViewById(R.id.diary_entry_edit_submit).setOnClickListener(new View.OnClickListener() {
@@ -155,7 +118,7 @@ public class DiaryEntryActivity extends AppCompatActivity implements
             case R.id.diary_entry_edit_delete:
                 new DeleteAlertDialogFragment().show(getSupportFragmentManager(), "dialog");
                 return true;
-        }
+    }
 
         return super.onOptionsItemSelected(menuItem);
     }
@@ -180,21 +143,22 @@ public class DiaryEntryActivity extends AppCompatActivity implements
     }
 
     private void onSubmit(){
-        Bundle data = new Bundle();
 
-        data.putString("NAME", nameField.getText().toString());
-        data.putSerializable("DATE", date);
-        data.putDouble("CALORIE", Double.parseDouble(calorieField.getText().toString()));
-        data.putDouble("FAT", Double.parseDouble(fatField.getText().toString()));
-        data.putDouble("PROTEIN", Double.parseDouble(proteinField.getText().toString()));
-        data.putDouble("CHOLESTEROL", Double.parseDouble(cholesterolField.getText().toString()));
-        data.putDouble("SUGAR", Double.parseDouble(sugarField.getText().toString()));
-        data.putDouble("SODIUM", Double.parseDouble(sodiumField.getText().toString()));
-        data.putDouble("CARBOHYDRATES", Double.parseDouble(carbohydrateField.getText().toString()));
-        data.putDouble("FIBER", Double.parseDouble(fiberField.getText().toString()));
+        FoodDiaryEntry newEntry = new FoodDiaryEntry.Builder()
+                .setName(nameField.getText().toString())
+                .setDate(date)
+                .setCalorie(nutrientEditor.getCalorie())
+                .setFat(nutrientEditor.getFat())
+                .setProtein(nutrientEditor.getProtein())
+                .setCholesterol(nutrientEditor.getCholesterol())
+                .setSugar(nutrientEditor.getSugar())
+                .setSodium(nutrientEditor.getSodium())
+                .setCarbs(nutrientEditor.getCarbs())
+                .setFiber(nutrientEditor.getFiber())
+                .build();
 
         Intent result = new Intent();
-        result.putExtra("DATA", data);
+        result.putExtra(ENTRY, newEntry);
 
         setResult(RESULT_OK, result);
         finish();

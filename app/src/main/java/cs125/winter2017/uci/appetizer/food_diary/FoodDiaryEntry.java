@@ -1,40 +1,55 @@
 package cs125.winter2017.uci.appetizer.food_diary;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.Seconds;
 
-public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactHolder {
+import cs125.winter2017.uci.appetizer.nutrients.NutrientFactHolder;
+import cs125.winter2017.uci.appetizer.nutrients.NutrientFacts;
+
+public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactHolder, Parcelable {
+
+    public static final Parcelable.Creator<FoodDiaryEntry> CREATOR =
+            new Parcelable.Creator<FoodDiaryEntry>() {
+
+                @Override
+                public FoodDiaryEntry createFromParcel(Parcel source) {
+                    return new FoodDiaryEntry(source);
+                }
+
+                @Override
+                public FoodDiaryEntry[] newArray(int size) {
+                    return new FoodDiaryEntry[size];
+                }
+            };
 
     private final @NonNull DateTime date;
 	private @NonNull String Name;
 
-    private int Servings;
-	private double Calorie;
-	private double Fat;
-	private double Protein;
-	private double Cholesterol;
-	private double Sugar;
-	private double Carbs;
-	private double Sodium;
-	private double Fiber;
+    private int Id;
+    private double Servings;
+	private NutrientFacts nutrientFacts;
 
     private FoodDiaryEntry(Builder builder){
         date = builder.Date;
         Name = builder.Name;
 
-        setName(builder.Name);
-        setServings(builder.Servings);
-        setCalorie(builder.Calorie);
-        setFat(builder.Fat);
-        setProtein(builder.Protein);
-        setCholesterol(builder.Cholesterol);
-        setSugar(builder.Sugar);
-        setCarbs(builder.Carbs);
-        setSodium(builder.Sodium);
-        setFiber(builder.Fiber);
+        Id = builder.Id;
+        Servings = builder.Servings;
+        nutrientFacts = builder.nutrientFacts;
+    }
+
+    private FoodDiaryEntry(Parcel parcel){
+        date = (DateTime) parcel.readSerializable();
+        Name = parcel.readString();
+
+        Id = parcel.readInt();
+        Servings = parcel.readDouble();
+        nutrientFacts = parcel.readParcelable(NutrientFacts.class.getClassLoader());
     }
 
     @Override
@@ -47,29 +62,23 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
         private @NonNull DateTime Date;
         private @NonNull String Name;
 
-        private int Servings;
-        private double Calorie;
-        private double Fat;
-        private double Protein;
-        private double Cholesterol;
-        private double Sugar;
-        private double Carbs;
-        private double Sodium;
-        private double Fiber;
+        private int Id;
+        private double Servings;
+        private NutrientFacts.Builder nutrientFactsBuilder;
+        private NutrientFacts nutrientFacts;
 
         public Builder(){
             Date = new DateTime();
             Name = "";
 
+            Id = -1;
             Servings = 1;
-            Calorie = 0;
-            Fat = 0;
-            Protein = 0;
-            Cholesterol = 0;
-            Sugar = 0;
-            Carbs = 0;
-            Sodium = 0;
-            Fiber = 0;
+            nutrientFactsBuilder = new NutrientFacts.Builder();
+        }
+
+        public Builder setId(int id) {
+            Id = id;
+            return this;
         }
 
         public Builder setDate(@NonNull DateTime date){
@@ -82,54 +91,69 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
             return this;
         }
 
-        public Builder setServings(int servings) {
+        public Builder setServings(double servings) {
             Servings = servings;
             return this;
         }
 
         public Builder setCalorie(double calorie) {
-            Calorie = calorie;
+            nutrientFactsBuilder.setCalorie(calorie);
             return this;
         }
 
         public Builder setFat(double fat) {
-            Fat = fat;
+            nutrientFactsBuilder.setFat(fat);
             return this;
         }
 
         public Builder setProtein(double protein) {
-            Protein = protein;
+            nutrientFactsBuilder.setProtein(protein);
             return this;
         }
 
         public Builder setCholesterol(double cholesterol) {
-            Cholesterol = cholesterol;
+            nutrientFactsBuilder.setCholesterol(cholesterol);
             return this;
         }
 
         public Builder setSugar(double sugar) {
-            Sugar = sugar;
+            nutrientFactsBuilder.setSugar(sugar);
             return this;
         }
 
         public Builder setCarbs(double carbs) {
-            Carbs = carbs;
+            nutrientFactsBuilder.setCarbs(carbs);
             return this;
         }
 
         public Builder setSodium(double sodium) {
-            Sodium = sodium;
+            nutrientFactsBuilder.setSodium(sodium);
             return this;
         }
 
         public Builder setFiber(double fiber) {
-            Fiber = fiber;
+            nutrientFactsBuilder.setFiber(fiber);
             return this;
         }
 
         public FoodDiaryEntry build(){
+            nutrientFacts = nutrientFactsBuilder.build();
             return new FoodDiaryEntry(this);
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(date);
+        dest.writeString(Name);
+        dest.writeInt(Id);
+        dest.writeDouble(Servings);
+        dest.writeParcelable(nutrientFacts, flags);
     }
 	
 	public String returnDate(){
@@ -137,6 +161,10 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
                 Integer.toString(date.get(DateTimeFieldType.monthOfYear())) + "-" +
                 Integer.toString(date.get(DateTimeFieldType.dayOfMonth()));
 	}
+
+	public int getId() { return Id; }
+
+    public void setId(int id) { Id = id; }
 
     @NonNull
     public DateTime getDate() {
@@ -152,85 +180,84 @@ public class FoodDiaryEntry implements Comparable<FoodDiaryEntry>, NutrientFactH
         Name = name;
     }
 
-    public int getServings() {
+    public double getServings() {
         return Servings;
     }
 
-    public void setServings(int servings) {
+    public void setServings(double servings) {
         Servings = servings;
     }
 
     @Override
     public double getCalorie() {
-        return Calorie;
+        return nutrientFacts.getCalorie();
     }
 
     public void setCalorie(double calorie) {
-        Calorie = calorie;
+        nutrientFacts.setCalorie(calorie);
     }
 
     @Override
     public double getFat() {
-        return Fat;
+        return nutrientFacts.getFat();
     }
 
     public void setFat(double fat) {
-        Fat = fat;
+        nutrientFacts.setFat(fat);
     }
 
     @Override
     public double getProtein() {
-        return Protein;
+        return nutrientFacts.getProtein();
     }
 
     public void setProtein(double protein) {
-        Protein = protein;
+        nutrientFacts.setProtein(protein);
     }
 
     @Override
     public double getCholesterol() {
-        return Cholesterol;
+        return nutrientFacts.getCholesterol();
     }
 
     public void setCholesterol(double cholesterol) {
-        Cholesterol = cholesterol;
+        nutrientFacts.setCholesterol(cholesterol);
     }
 
     @Override
     public double getSugar() {
-        return Sugar;
+        return nutrientFacts.getSugar();
     }
 
     public void setSugar(double sugar) {
-        Sugar = sugar;
+        nutrientFacts.setSugar(sugar);
     }
 
     @Override
     public double getCarbs() {
-        return Carbs;
+        return nutrientFacts.getCarbs();
     }
 
     public void setCarbs(double carbs) {
-        Carbs = carbs;
+        nutrientFacts.setCarbs(carbs);
     }
 
     @Override
     public double getSodium() {
-        return Sodium;
+        return nutrientFacts.getSodium();
     }
 
     public void setSodium(double sodium) {
-        Sodium = sodium;
+        nutrientFacts.setSodium(sodium);
     }
 
     @Override
     public double getFiber() {
-        return Fiber;
+        return nutrientFacts.getFiber();
     }
 
     public void setFiber(double fiber) {
-        Fiber = fiber;
+        nutrientFacts.setFiber(fiber);
     }
-
 
 }
