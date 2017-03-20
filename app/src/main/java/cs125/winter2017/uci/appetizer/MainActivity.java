@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId())
         {
             case R.id.nav_search:
+                Intent restaurantSearchIntent = new Intent(this, RestaurantSearchActivity.class);
+                startActivity(restaurantSearchIntent);
                 break;
             case R.id.nav_daily_targets:
                 Intent dailyGoalsIntent = new Intent(this, DailyTargetActivity.class);

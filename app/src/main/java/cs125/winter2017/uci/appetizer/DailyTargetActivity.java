@@ -101,6 +101,7 @@ public class DailyTargetActivity extends AppCompatActivity
                 moveAwayIntent = new Intent(this, MainActivity.class);
                 break;
             case R.id.nav_search:
+                moveAwayIntent = new Intent(this, RestaurantSearchActivity.class);
                 break;
         }
 
