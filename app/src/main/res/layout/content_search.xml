@@ -1,150 +1,310 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
+    android:orientation="vertical"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cs125.winter2017.uci.appetizer.RestaurantSearchActivity"
+    tools:context="cs125.winter2017.uci.appetizer.SearchActivity"
     tools:showIn="@layout/app_bar_search">
 
-
-    <android.support.constraint.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/guideline"
-        app:layout_constraintGuide_begin="20dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteY="20dp"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <LinearLayout
-        android:layout_width="344dp"
-        android:layout_height="495dp"
-        android:baselineAligned="false"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:orientation="vertical"
-        android:weightSum="1">
-
-        <EditText
-            android:id="@+id/SearchInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Search" />
-
-        <EditText
-            android:id="@+id/LocationInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="Location" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="0.99">
 
+            android:padding="@dimen/content_padding">
 
-
-
-            <TextView
-                android:id="@+id/textView3"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Price" />
 
-            <RadioGroup
+                android:layout_marginBottom="@dimen/content_padding">
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/content_padding"
+
+                        android:background="@android:color/white">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:src="@drawable/ic_place_black_24dp"/>
+
+                            <Space
+                                android:layout_width="@dimen/text_spacer"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:text="@string/search_location_label"/>
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/search_current_location_text"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:padding="@dimen/content_padding"/>
+
+                    </LinearLayout>
+
+                    <fragment
+                        android:id="@+id/search_current_location_map"
+
+                        android:name="cs125.winter2017.uci.appetizer.location.GetLocationFragment"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checkedButton="@+id/Selection$"
-                android:orientation="horizontal" >
 
-                <RadioButton
-                    android:id="@+id/Selection$"
-                    android:layout_width="wrap_content"
+                android:layout_marginBottom="@dimen/content_padding">
+
+                <LinearLayout
+                    android:orientation="vertical"
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="$" />
 
-                <RadioButton
-                    android:id="@+id/Selection$$"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="$$" />
+                    android:padding="@dimen/content_padding"
 
-                <RadioButton
-                    android:id="@+id/Selection$$$"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="$$$" />
+                    android:background="@android:color/white">
 
-                <RadioButton
-                    android:id="@+id/Selection$$$$"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="$$$$" />
+                    <LinearLayout
+                        android:orientation="horizontal"
 
-            </RadioGroup>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView4"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:src="@drawable/ic_monetization_on_black_24dp"/>
+
+                        <Space
+                            android:layout_width="@dimen/text_spacer"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/search_price_label" />
+
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:orientation="horizontal"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/content_padding"
+
+                        android:checkedButton="@+id/search_price_lowest">
+
+                        <RadioButton
+                            android:id="@+id/search_price_lowest"
+
+                            android:layout_weight="1"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/search_price_lowest" />
+
+                        <RadioButton
+                            android:id="@+id/search_price_lower"
+
+                            android:layout_weight="1"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/search_price_lower" />
+
+                        <RadioButton
+                            android:id="@+id/search_price_higher"
+
+                            android:layout_weight="1"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/search_price_higher" />
+
+                        <RadioButton
+                            android:id="@+id/search_price_highest"
+
+                            android:layout_weight="1"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/search_price_highest" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Meal" />
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checkedButton="@+id/SelectionBreakfast"
-                android:orientation="horizontal" >
+                android:layout_marginBottom="@dimen/content_padding">
 
-                <RadioButton
-                    android:id="@+id/SelectionBreakfast"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Breakfast" />
 
-                <RadioButton
-                    android:id="@+id/SelectionLunch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Lunch" />
+                    android:padding="@dimen/content_padding"
 
-                <RadioButton
-                    android:id="@+id/SelectionDinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Dinner" />
+                    android:background="@android:color/white">
 
-                <RadioButton
-                    android:id="@+id/SelectionSnack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Snack" />
-            </RadioGroup>
+                    <LinearLayout
+                        android:orientation="horizontal"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:src="@drawable/ic_alarm_black_24dp"/>
+
+                        <Space
+                            android:layout_width="@dimen/text_spacer"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/search_meal_time"/>
+
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:orientation="horizontal"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/content_padding"
+
+                        android:checkedButton="@+id/search_meal_time_breakfast">
+
+
+                        <LinearLayout
+                            android:orientation="vertical"
+
+                            android:layout_weight="1"
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+                                android:id="@+id/search_meal_time_breakfast"
+
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="@string/search_meal_time_breakfast" />
+
+                            <RadioButton
+                                android:id="@+id/search_meal_time_dinner"
+
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="@string/search_meal_time_dinner" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:orientation="vertical"
+
+                            android:layout_weight="1"
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <RadioButton
+
+                                android:id="@+id/search_meal_time_lunch"
+
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="@string/search_meal_time_lunch" />
+
+                            <RadioButton
+                                android:id="@+id/search_meal_time_snack"
+
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="@string/search_meal_time_snack" />
+
+                        </LinearLayout>
+
+
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Search" />
+    </ScrollView>
 
-    </LinearLayout>
-
-
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

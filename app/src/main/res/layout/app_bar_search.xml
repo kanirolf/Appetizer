@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cs125.winter2017.uci.appetizer.RestaurantSearchActivity">
+    tools:context="cs125.winter2017.uci.appetizer.SearchActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -6,6 +6,7 @@
     <string name="title_activity_diary_entry_new">New Diary Entry</string>
     <string name="title_activity_diary_entry_edit">Edit Diary Entry</string>
     <string name="title_activity_daily_target">Daily Targets</string>
+    <string name="title_activity_search">Search</string>
 
     <string name="nav_diary">Home</string>
     <string name="nav_daily_target">@string/title_activity_daily_target</string>
@@ -55,15 +56,42 @@
 
     <string name="diary_entry_unsaved">This entry has not been saved. Go back anyway?</string>
     <string name="diary_entry_name_hint">Enter dish name here...</string>
+    <string name="diary_entry_delete_warning">This entry cannot be restored after deletion. Delete anyway?</string>
+
+    <string name="daily_targets_saved">Nutritional targets saved!</string>
+
 
     <string name="ok">OK</string>
     <string name="alert_cancel">CANCEL</string>
     <string name="save">SAVE</string>
-    <string name="diary_entry_delete_warning">This entry cannot be restored after deletion. Delete anyway?</string>
-    <string name="title_activity_search">SearchActivity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="daily_targets_saved">Nutritional targets saved!</string>
+    <string name="get_location_service_failed">An error occurred accessing the location service.</string>
+    <string name="get_location_invalid_location">The location provided was invalid.</string>
+    <string name="get_location_no_addresses">No addresses were found using the given location.</string>
+    <string name="get_location_found">Location found.</string>
+
+    <string name="search_fetching_location">Fetching location...</string>
+    <string name="search_location_not_found">Location could not be found.</string>
+    <string name="search_address_not_found">No addresses matched your current location.</string>
+    <string name="search_bar_hint">Enter search here...</string>
+    <string name="search_location_label">Location</string>
+    <string name="search_price_label">Price</string>
+    <string name="search_price_lowest">$</string>
+    <string name="search_price_lower">$$</string>
+    <string name="search_price_higher">$$$</string>
+    <string name="search_price_highest">$$$$</string>
+    <string name="search_meal_time">Meal time</string>
+    <string name="search_meal_time_breakfast">Breakfast</string>
+    <string name="search_meal_time_dinner">Dinner</string>
+    <string name="search_meal_time_snack">Snack</string>
+    <string name="search_meal_time_lunch">Lunch</string>
+    <string name="search_location_perms_denied">Location permissions were denied.</string>
+    <string name="get_location_getting_perms">Getting permissions...</string>
+    <string name="get_location_connecting_API">Connecting to Google API...</string>
+    <string name="get_location_getting_perms_failed">Getting permissions failed.</string>
+    <string name="get_location_getting_location">Getting location...</string>
+    <string name="get_location_connecting_API_failed">Connecting to Google API failed.</string>
+    <string name="get_location_getting_location_failed">Failed to get a location.</string>
+    <string name="get_location_loading_map">Loading map...</string>
 
 </resources>
