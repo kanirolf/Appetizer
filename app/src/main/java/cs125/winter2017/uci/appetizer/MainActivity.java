@@ -3,20 +3,17 @@ package cs125.winter2017.uci.appetizer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import org.joda.time.DateTime;
 
 import java.util.Locale;
 
@@ -26,7 +23,7 @@ import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay;
 import cs125.winter2017.uci.appetizer.food_diary.FoodDiaryEntry;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DiaryDayFragment.OnDiaryDayEditListener {
 
     private static final int NEW_ENTRY = 0;
     private static final int EDIT_ENTRY = 1;
@@ -62,6 +59,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent addEntryIntent = new Intent(MainActivity.this, DiaryEntryActivity.class);
+                addEntryIntent.putExtra(DiaryEntryActivity.EDITING_ENTRY, false);
                 startActivityForResult(addEntryIntent, NEW_ENTRY);
             }
         });
@@ -111,51 +109,49 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onDiaryDayEdit(FoodDiaryDay day, FoodDiaryEntry entry) {
+        entryToEdit = entry;
+
+        Intent editIntent = new Intent(this, DiaryEntryActivity.class);
+        editIntent.putExtra(DiaryEntryActivity.ENTRY, entryToEdit);
+        editIntent.putExtra(DiaryEntryActivity.EDITING_ENTRY, true);
+
+        startActivityForResult(editIntent, EDIT_ENTRY);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
         if (resultCode == RESULT_CANCELED)
             return;
 
         boolean delete = data.getBooleanExtra("DELETE", false);
-        Bundle entryData = data.getBundleExtra("DATA");
+        FoodDiaryEntry entry = data.getParcelableExtra(DiaryEntryActivity.ENTRY);
 
         switch (requestCode) {
             case NEW_ENTRY:
-                FoodDiaryEntry newEntry = new FoodDiaryEntry.Builder()
-                        .setName(entryData.getString("NAME"))
-                        .setDate((DateTime) entryData.getSerializable("DATE"))
-                        .setCalorie(entryData.getDouble("CALORIE"))
-                        .setFat(entryData.getDouble("FAT"))
-                        .setCarbs(entryData.getDouble("CARBOHYDRATES"))
-                        .setFiber(entryData.getDouble("FIBER"))
-                        .setCholesterol(entryData.getDouble("CHOLESTEROL"))
-                        .setProtein(entryData.getDouble("PROTEIN"))
-                        .setSodium(entryData.getDouble("SODIUM"))
-                        .setSugar(entryData.getDouble("SUGAR"))
-                        .build();
-                FoodDiary.getInstance().addEntry(newEntry);
+                FoodDiary.getInstance().addEntry(entry);
                 break;
             case EDIT_ENTRY:
                 if (entryToEdit != null) {
                     if (delete)
                         FoodDiary.getInstance().removeEntry(entryToEdit);
                     else {
-                        entryToEdit.setName(entryData.getString("NAME"));
-                        entryToEdit.setCalorie(entryData.getDouble("CALORIE"));
-                        entryToEdit.setFat(entryData.getDouble("FAT"));
-                        entryToEdit.setCarbs(entryData.getDouble("CARBOHYDRATES"));
-                        entryToEdit.setFiber(entryData.getDouble("FIBER"));
-                        entryToEdit.setCholesterol(entryData.getDouble("CHOLESTEROL"));
-                        entryToEdit.setProtein(entryData.getDouble("PROTEIN"));
-                        entryToEdit.setSodium(entryData.getDouble("SODIUM"));
-                        entryToEdit.setSugar(entryData.getDouble("SUGAR"));
+                        entryToEdit.setName(entry.getName());
+                        entryToEdit.setCalorie(entry.getCalorie());
+                        entryToEdit.setFat(entry.getFat());
+                        entryToEdit.setCarbs(entry.getCarbs());
+                        entryToEdit.setFiber(entry.getFiber());
+                        entryToEdit.setCholesterol(entry.getCholesterol());
+                        entryToEdit.setProtein(entry.getProtein());
+                        entryToEdit.setSodium(entry.getSodium());
+                        entryToEdit.setSugar(entry.getSugar());
                     }
                     entryToEdit = null;
                 }
                 break;
         }
     }
-
 
     // TODO: add the name of the nutrient you are tracking to the card
     private void updateDiaryOverview(){
@@ -164,7 +160,8 @@ public class MainActivity extends AppCompatActivity
                 String.format(Locale.getDefault(), "%d", (int) todaysNutrients.getCalorie()));
 
         diaryOverviewNutrientTarget.setText(
-                String.format(Locale.getDefault(), "%d", (int) DailyTargets.getCalorie(this)));
+                String.format(Locale.getDefault(), "%d",
+                        (int) DailyTargets.loadFromContext(this).getCalorie()));
         diaryOverviewNutrientUnits.setText(getString(R.string.calorie_units));
 
     }
@@ -181,92 +178,19 @@ public class MainActivity extends AppCompatActivity
 
         diaryFeedEmpty.setVisibility(View.GONE);
 
-        LayoutInflater layoutInflater = getLayoutInflater();
-
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        DiaryDayFragment dayFragment;
 
         for (FoodDiaryDay foodDiaryDay : foodDiary.entries.values()){
-
-            if (foodDiaryDay.isEmpty())
+            if (foodDiaryDay.entries.isEmpty())
                 continue;
 
-            LinearLayout diaryDay = (LinearLayout) layoutInflater.inflate(
-                    R.layout.layout_diary_day, null);
-            ((TextView)diaryDay.findViewById(R.id.diary_day_date))
-                    .setText(foodDiaryDay.getHumanReadableDate());
-
-            for (final FoodDiaryEntry entry : foodDiaryDay){
-                final LinearLayout diaryDayCard = (LinearLayout) layoutInflater.inflate(
-                        R.layout.layout_diary_day_card, null);
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_name))
-                        .setText(entry.getName());
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_calories))
-                        .setText(String.format("%s", (int)entry.getCalorie()));
-
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_fat_value))
-                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getFat()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_cholesterol_value))
-                        .setText(String.format(Locale.getDefault(), "%.1f",  entry.getCholesterol()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_sodium_value))
-                        .setText(String.format(Locale.getDefault(), "%.1f",  entry.getSodium()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_carbohydrates_value))
-                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getCarbs()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_fiber_value))
-                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getFiber()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_sugar_value))
-                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getSugar()));
-                ((TextView)diaryDayCard.findViewById(R.id.diary_day_card_protein_value))
-                        .setText(String.format(Locale.getDefault(), "%.1f", entry.getProtein()));
-
-                final FrameLayout nutrientView =
-                        (FrameLayout) diaryDayCard.findViewById(R.id.diary_day_card_nutrients);
-                // TODO: go to the entry page when clicked
-                diaryDayCard.setTag(entry);
-                diaryDayCard.setActivated(false);
-                diaryDayCard.findViewById(R.id.diary_day_card_edit).setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                entryToEdit = (FoodDiaryEntry) diaryDayCard.getTag();
-
-                                Bundle data = new Bundle();
-                                data.putString("NAME", entryToEdit.getName());
-                                data.putSerializable("DATE", entryToEdit.getDate());
-                                data.putDouble("CALORIE", entryToEdit.getCalorie());
-                                data.putDouble("FAT", entryToEdit.getFat());
-                                data.putDouble("PROTEIN", entryToEdit.getProtein());
-                                data.putDouble("CHOLESTEROL", entryToEdit.getCholesterol());
-                                data.putDouble("SUGAR", entryToEdit.getSugar());
-                                data.putDouble("CARBOHYDRATE", entryToEdit.getCarbs());
-                                data.putDouble("SODIUM", entryToEdit.getSodium());
-                                data.putDouble("FIBER", entryToEdit.getFiber());
-
-                                Intent editEntryIntent = new Intent(MainActivity.this,
-                                        DiaryEntryActivity.class);
-                                editEntryIntent.putExtra("DATA", data);
-                                editEntryIntent.putExtra(DiaryEntryActivity.EDITING_ENTRY, true);
-
-                                MainActivity.this.startActivityForResult(editEntryIntent,
-                                        EDIT_ENTRY);
-                            }
-                        }
-                );
-                diaryDayCard.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (nutrientView.getVisibility() == View.GONE) {
-                            nutrientView.setVisibility(View.VISIBLE);
-                            diaryDayCard.setActivated(true);
-                        } else
-                        {
-                            nutrientView.setVisibility(View.GONE);
-                            diaryDayCard.setActivated(false);
-                        }
-                    }
-                });
-                diaryDay.addView(diaryDayCard);
-            }
-            diaryFeed.addView(diaryDay);
+            dayFragment = DiaryDayFragment.newInstance(foodDiaryDay);
+            dayFragment.setEditListener(this);
+            transaction.add(R.id.diary_feed, dayFragment);
         }
 
+        transaction.commit();
     }
+
 }

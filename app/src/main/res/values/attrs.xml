@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Editable">
+        <attr name="editable" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="NutrientDisplay" >
+        <attr name="label" format="string" />
+        <attr name="units" format="string" />
+    </declare-styleable>
+</resources>

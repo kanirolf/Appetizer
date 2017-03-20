@@ -1,0 +1,32 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="cs125.winter2017.uci.appetizer.food_diary.FoodDiaryDay" />
+        <variable name="date" type="org.joda.time.DateTime" />
+    </data>
+    <LinearLayout
+        android:id="@+id/diary_day"
+
+        xmlns:tools="http://schemas.android.com/tools"
+
+        android:orientation="vertical"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="cs125.winter2017.uci.appetizer.DiaryDayFragment">
+
+        <TextView
+            android:id="@+id/diary_day_date"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingLeft="@dimen/content_padding"
+            android:layout_marginTop="@dimen/content_padding"
+            android:layout_marginBottom="@dimen/content_padding"
+
+            android:textStyle="bold"
+            android:text='@{FoodDiaryDay.HUMAN_READABLE_FORMATTER.print(date)}'/>
+
+    </LinearLayout>
+
+</layout>

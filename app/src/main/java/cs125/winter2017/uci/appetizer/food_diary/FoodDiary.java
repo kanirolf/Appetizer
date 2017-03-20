@@ -37,7 +37,7 @@ public class FoodDiary {
     public int numEntries(){
         int entryCount = 0;
         for (FoodDiaryDay day : entries.values())
-            entryCount += day.size();
+            entryCount += day.entries.size();
         return entryCount;
     }
 
