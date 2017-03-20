@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         DiaryDayFragment dayFragment;
 
-        for (FoodDiaryDay foodDiaryDay : foodDiary.entries.values()){
+        for (FoodDiaryDay foodDiaryDay : foodDiary.getDaysBeforeNow(dbHelper, 5)){
             if (foodDiaryDay.entries.isEmpty())
                 continue;
 

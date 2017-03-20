@@ -63,7 +63,8 @@ public class DiaryDayFragment extends Fragment implements
 
     @Override
     public void onDiaryCardEdit(FoodDiaryEntry entry) {
-        editListener.onDiaryDayEdit(day, entry);
+        if (editListener != null)
+            editListener.onDiaryDayEdit(day, entry);
     }
 
     public void setEditListener(OnDiaryDayEditListener listener){

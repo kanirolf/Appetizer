@@ -21,6 +21,8 @@ public class NutrientSingleValueEditorFragment extends Fragment implements TextW
 
     FragmentNutrientSingleValueEditorBinding binding;
 
+    private OnValueEditListener editListener;
+
     private String label;
     private String units;
     private boolean editable;
@@ -68,13 +70,14 @@ public class NutrientSingleValueEditorFragment extends Fragment implements TextW
     @Override
     public void afterTextChanged(Editable s) {
         String valueString = s.toString();
-
         try {
             value = Double.parseDouble(valueString);
         } catch (NumberFormatException e){
             value = 0;
         }
 
+        if (editListener != null)
+            editListener.onValueEdit(label, value);
     }
 
     @Override
@@ -105,4 +108,11 @@ public class NutrientSingleValueEditorFragment extends Fragment implements TextW
         return value;
     }
 
+    public void setEditListener(OnValueEditListener listener){
+        editListener = listener;
+    }
+
+    public interface OnValueEditListener {
+        void onValueEdit(String label, double value);
+    }
 }

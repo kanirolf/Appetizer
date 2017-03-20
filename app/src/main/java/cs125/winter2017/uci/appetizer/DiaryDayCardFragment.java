@@ -65,9 +65,9 @@ public class DiaryDayCardFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.diary_day_card_edit){
+        if (v.getId() == R.id.diary_day_card_edit && editListener != null)
             editListener.onDiaryCardEdit(entry);
-        } else {
+        else {
             if (binding.diaryDayCardNutrientsContainer.getVisibility() == View.GONE){
                 binding.diaryDayCardNutrientsContainer.setVisibility(View.VISIBLE);
                 getView().setActivated(true);

@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 
 import cs125.winter2017.uci.appetizer.nutrients.NutrientFactHolder;
 
-public class NutrientEditorFragment extends Fragment implements NutrientFactHolder {
+public class NutrientEditorFragment extends Fragment implements NutrientFactHolder,
+        NutrientSingleValueEditorFragment.OnValueEditListener {
 
     private NutrientSingleValueEditorFragment calorieEditor;
     private NutrientSingleValueEditorFragment fatEditor;
@@ -19,6 +20,8 @@ public class NutrientEditorFragment extends Fragment implements NutrientFactHold
     private NutrientSingleValueEditorFragment carbohydratesEditor;
     private NutrientSingleValueEditorFragment sodiumEditor;
     private NutrientSingleValueEditorFragment fiberEditor;
+
+    private OnNutrientsEditListener editListener;
 
     public NutrientEditorFragment() {}
 
@@ -31,20 +34,28 @@ public class NutrientEditorFragment extends Fragment implements NutrientFactHold
 
         calorieEditor = (NutrientSingleValueEditorFragment)
                 fragmentManager.findFragmentById(R.id.editor_calories);
+        calorieEditor.setEditListener(this);
         fatEditor = (NutrientSingleValueEditorFragment)
                 fragmentManager.findFragmentById(R.id.editor_fat);
+        fatEditor.setEditListener(this);
         proteinEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_protein);
+        proteinEditor.setEditListener(this);
         cholesterolEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_cholesterol);
+        cholesterolEditor.setEditListener(this);
         sugarEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_sugar);
+        sugarEditor.setEditListener(this);
         carbohydratesEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_carbohydrate);
+        carbohydratesEditor.setEditListener(this);
         sodiumEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_sodium);
+        sodiumEditor.setEditListener(this);
         fiberEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_fiber);
+        fiberEditor.setEditListener(this);
 
         setEditable(false);
 
@@ -111,5 +122,19 @@ public class NutrientEditorFragment extends Fragment implements NutrientFactHold
     @Override
     public double getFiber() {
         return fiberEditor.getValue();
+    }
+
+    @Override
+    public void onValueEdit(String nutrient, double value) {
+        if (editListener != null)
+            editListener.onNutrientEdit(nutrient, value);
+    }
+
+    public void setEditListener(OnNutrientsEditListener listener){
+        editListener = listener;
+    }
+
+    public interface OnNutrientsEditListener {
+        void onNutrientEdit(String nutrient, double value);
     }
 }
