@@ -14,6 +14,7 @@ public class MenuItem {
     private double Carbs;
     private double Sodium;
     private double Fiber;
+    private double Rank;
     private double Serving_size;
     private String Serving_unit;
 
@@ -32,9 +33,13 @@ public class MenuItem {
 
     }
 
-    public void setName(String name) {
-        this.Name = name;
+    public String toString(){
+        return "Name :" + Name + "   Calories: " + Calorie + "    Rank: " + Rank + "\n";
     }
+
+    public void setRank(double rank){ this.Rank = rank;}
+
+    public void setName(String name) {this.Name = name;}
 
     public void setCalorie(double calorie) {
         this.Calorie = calorie;
@@ -71,6 +76,8 @@ public class MenuItem {
     public String getName(){
         return Name;
     }
+
+    public double getRank(){return Rank;}
 
     public double getCalorie(){
         return Calorie;

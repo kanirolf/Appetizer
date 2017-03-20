@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class searchdriver {
     //Fix the amount of nutrionix searches to like 1-2
     public static void main(String[] args){
-        SearchMenu sm = new SearchMenu("Jack in the box");
-        ArrayList<MenuItem> items = sm.search();
+//        SearchMenu sm = new SearchMenu("Jack in the box");
+//        ArrayList<MenuItem> items = sm.search();
 
 
 //        Search_Places temp = new Search_Places("burgers", 33.6825773, -117.8140463,5000,-1,"restaurant","snack",false);

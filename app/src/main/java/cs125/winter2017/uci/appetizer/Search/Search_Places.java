@@ -21,15 +21,15 @@ public class Search_Places{
     private boolean Opennow;
     private String GoogleAPIkey = "AIzaSyARCNUYBmwBkXLBCWkmddG2Kr-Bcb0xe-Y";
 
-    public Search_Places(String query, double lat, double lon, int radius, int price, String type, String mealtype, boolean opennow ){
+    public Search_Places(String query, double lat, double lon, int radius, int price, String mealtype){
         Query = query.replaceAll(" ", "+");
         Lat = lat;
         Lon = lon;
         Radius = radius;
         Price = price;
-        Type = type;
+        Type = "restaurant";
         Mealtype = mealtype;
-        Opennow = opennow;
+        //Opennow = opennow;
 
     }
 
@@ -42,7 +42,7 @@ public class Search_Places{
         if (Price > -1){
             search_url = search_url + "&price=" + Price;
         }
-        search_url = search_url + "&opennow=" + Boolean.toString(Opennow);
+        //search_url = search_url + "&opennow=" + Boolean.toString(Opennow);
         search_url = search_url + "&key=" + GoogleAPIkey;
 
         return search_url;

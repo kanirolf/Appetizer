@@ -1,5 +1,7 @@
 package cs125.winter2017.uci.appetizer.Search;
 
+import java.util.ArrayList;
+
 /**
  * Created by Andrew on 3/18/2017.
  */
@@ -13,6 +15,8 @@ public class Restaurant {
     private double Lon;
     private int Price;
     private double Rating;
+    private double Rank;
+    private ArrayList<MenuItem> Menu;
 
     public Restaurant(String name, String restID, String address, double lat, double lon, int price, double rating){
         Name = name;
@@ -22,6 +26,19 @@ public class Restaurant {
         Lon = lon;
         Price = price;
         Rating = rating;
+        Rank = 0;
+        Menu = new ArrayList<MenuItem>();
+
+    }
+
+    public String toString(){
+        return "RESTAURANT: " + Name + "     RANK: " + Rank + " \n";
+    }
+
+    public void setRank(double rank){ Rank = rank;}
+
+    public void setMenu(ArrayList<MenuItem> menu){
+        Menu = menu;
     }
 
     public String getName(){return Name;}
@@ -38,4 +55,7 @@ public class Restaurant {
 
     public String getRestID() {return RestID;}
 
+    public double getRank(){return Rank;}
+
+    public ArrayList<MenuItem> getMenu() {return Menu;}
 }
