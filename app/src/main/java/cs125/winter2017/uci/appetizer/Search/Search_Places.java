@@ -21,16 +21,14 @@ public class Search_Places{
     private boolean Opennow;
     private String GoogleAPIkey = "AIzaSyARCNUYBmwBkXLBCWkmddG2Kr-Bcb0xe-Y";
 
-    public Search_Places(String query, double lat, double lon, int radius, int price, String type, String mealtype, boolean opennow ){
+    public Search_Places(String query, double lat, double lon, int radius, int price, String mealtype){
         Query = query.replaceAll(" ", "+");
         Lat = lat;
         Lon = lon;
         Radius = radius;
         Price = price;
-        Type = type;
+        Type = "restaurant";
         Mealtype = mealtype;
-        Opennow = opennow;
-
     }
 
     private String get_url(){
