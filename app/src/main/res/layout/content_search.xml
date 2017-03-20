@@ -39,36 +39,16 @@
                         android:orientation="vertical"
 
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="wrap_content">
 
-                        android:padding="@dimen/content_padding"
-
-                        android:background="@android:color/white">
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-
+                        <cs125.winter2017.uci.appetizer.CardHeader
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            android:padding="@dimen/content_padding"
 
-                                android:src="@drawable/ic_place_black_24dp"/>
-
-                            <Space
-                                android:layout_width="@dimen/text_spacer"
-                                android:layout_height="wrap_content" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:text="@string/search_location_label"/>
-
-                        </LinearLayout>
-
+                            app:cardHeaderIcon="@drawable/ic_place_white_24dp"
+                            app:cardHeaderTitle="@string/search_location_label" />
 
                         <TextView
                             android:id="@+id/search_current_location_text"
@@ -76,7 +56,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
 
-                            android:padding="@dimen/content_padding"/>
+                            android:padding="@dimen/content_padding"
+
+                            android:background="@android:color/white"/>
 
                     </LinearLayout>
 
@@ -102,35 +84,16 @@
                     android:orientation="vertical"
 
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="wrap_content">
 
-                    android:padding="@dimen/content_padding"
-
-                    android:background="@android:color/white">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-
+                    <cs125.winter2017.uci.appetizer.CardHeader
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        android:padding="@dimen/content_padding"
 
-                            android:src="@drawable/ic_monetization_on_black_24dp"/>
-
-                        <Space
-                            android:layout_width="@dimen/text_spacer"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-
-                            android:text="@string/search_price_label" />
-
-                    </LinearLayout>
+                        app:cardHeaderIcon="@drawable/ic_monetization_on_white_24dp"
+                        app:cardHeaderTitle="@string/search_price_label" />
 
                     <RadioGroup
                         android:orientation="horizontal"
@@ -139,6 +102,8 @@
                         android:layout_height="wrap_content"
 
                         android:padding="@dimen/content_padding"
+
+                        android:background="@android:color/white"
 
                         android:checkedButton="@+id/search_price_lowest">
 
@@ -199,33 +164,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:padding="@dimen/content_padding"
+                    >
 
-                    android:background="@android:color/white">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-
+                    <cs125.winter2017.uci.appetizer.CardHeader
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                        android:padding="@dimen/content_padding"
 
-                            android:src="@drawable/ic_alarm_black_24dp"/>
-
-                        <Space
-                            android:layout_width="@dimen/text_spacer"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-
-                            android:text="@string/search_meal_time"/>
-
-                    </LinearLayout>
+                        app:cardHeaderIcon="@drawable/ic_alarm_white_24dp"
+                        app:cardHeaderTitle="@string/search_meal_time" />
 
                     <RadioGroup
                         android:orientation="horizontal"
@@ -234,6 +182,8 @@
                         android:layout_height="wrap_content"
 
                         android:padding="@dimen/content_padding"
+
+                        android:background="@android:color/white"
 
                         android:checkedButton="@+id/search_meal_time_breakfast">
 

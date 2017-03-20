@@ -14,7 +14,6 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,46 +30,27 @@
 
                 <LinearLayout
                     android:orientation="vertical"
+
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:padding="@dimen/content_padding">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
+                    <cs125.winter2017.uci.appetizer.CardHeader
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:padding="@dimen/content_padding"
 
-                        <ImageView
-                            android:layout_width="@dimen/card_content_font_size"
-                            android:layout_height="@dimen/card_content_font_size"
-
-                            android:layout_gravity="center_vertical"
-
-                            android:src="@drawable/ic_mode_edit_black_24dp"/>
-
-                        <android.support.v4.widget.Space
-                            android:layout_width="@dimen/text_spacer"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-
-                            android:layout_marginBottom="@dimen/content_padding"
-
-                            android:fontFamily="sans-serif-condensed"
-                            android:text="Goals"
-
-                            android:textSize="@dimen/card_label_header_font_size" />
-
-                    </LinearLayout>
+                        app:cardHeaderIcon="@drawable/ic_done_white_24dp"
+                        app:cardHeaderTitle="@string/diary_targets_label" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+
+                        android:padding="@dimen/content_padding"
+
+                        android:background="@android:color/white">
 
                         <TextView
                             android:id="@+id/diary_overview_nutrient_value"
@@ -127,43 +107,53 @@
 
             </android.support.v7.widget.CardView>
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
                 android:id="@+id/diary_add_entry"
-
-                android:orientation="horizontal"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:padding="@dimen/content_padding">
+                android:layout_marginBottom="@dimen/content_padding">
 
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
 
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:layout_centerInParent="true">
+                    android:padding="@dimen/content_padding"
 
-                    <ImageView
+                    android:background="@android:color/white">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:src="@drawable/ic_add_box_black_24dp"/>
+                        android:layout_centerInParent="true">
 
-                    <Space
-                        android:layout_width="@dimen/text_spacer"
-                        android:layout_height="wrap_content" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                            android:src="@drawable/ic_add_box_black_24dp"/>
 
-                        android:text="@string/diary_feed_add"/>
+                        <Space
+                            android:layout_width="@dimen/text_spacer"
+                            android:layout_height="wrap_content" />
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-            </RelativeLayout>
+                            android:text="@string/diary_feed_add"/>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
 
             <TextView
                 android:id="@+id/diary_feed_empty"

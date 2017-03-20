@@ -20,4 +20,5 @@
     <dimen name="daily_target_unit_max_width">25dp</dimen>
     <dimen name="standalone_text_size">24sp</dimen>
     <dimen name="get_location_map_height">200dp</dimen>
+    <dimen name="nutrient_value_height">40dp</dimen>
 </resources>

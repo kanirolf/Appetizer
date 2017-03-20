@@ -11,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment"
-        android:padding="@dimen/content_padding">
+        android:paddingTop="@dimen/text_spacer"
+        android:paddingBottom="@dimen/text_spacer"
+        android:paddingLeft="@dimen/content_padding"
+        android:paddingRight="@dimen/content_padding">
 
         <TextView
             android:id="@+id/nutrient_label"
@@ -27,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_gravity="right">
+            android:layout_gravity="center_vertical|right">
 
             <EditText
                 android:id="@+id/nutrient_value_editable"
@@ -35,7 +38,7 @@
                 android:visibility="@{editable ? View.VISIBLE : View.GONE}"
 
                 android:layout_width="@dimen/edittext_min_width"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/nutrient_value_height"
 
                 android:layout_gravity="center_vertical|right"
 
@@ -48,14 +51,17 @@
                 android:visibility="@{editable ? View.GONE : View.VISIBLE}"
 
                 android:layout_width="@dimen/edittext_min_width"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/nutrient_value_height"
 
+                android:gravity="center|right"
                 android:layout_gravity="center_vertical|right" />
 
             <LinearLayout
                 android:id="@+id/nutrient_unit_container"
 
                 android:visibility="@{units == null || units.isEmpty() ? View.GONE : View.VISIBLE}"
+
+                android:layout_gravity="center_vertical"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -67,9 +73,10 @@
                 <TextView
                     android:id="@+id/nutrient_unit"
 
-                    android:layout_width="@dimen/daily_target_unit_max_width"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
+                    android:gravity="center_vertical|left"
                     android:layout_gravity="center_vertical|left"
 
                     android:text='@{ units ??  "" }' />

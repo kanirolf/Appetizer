@@ -70,17 +70,15 @@ public class DiaryEntryActivity extends AppCompatActivity implements
 
             date = new DateTime();
             dateField.setText(FoodDiaryDay.HUMAN_READABLE_FORMATTER.print(date));
-            dateField.setOnClickListener(new View.OnClickListener() {
+            dateField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
-                public void onClick(View v) {
-                    View currentFocus = getCurrentFocus();
-                    if (currentFocus != null)
-                        currentFocus.clearFocus();
-                    DatePickerDialog datePickerDialog = new DatePickerDialog( DiaryEntryActivity.this,
-                            DiaryEntryActivity.this, date.getYear(), date.getMonthOfYear() - 1,
-                            date.getDayOfMonth());
-                    datePickerDialog.show();
-
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(DiaryEntryActivity.this,
+                                DiaryEntryActivity.this, date.getYear(), date.getMonthOfYear() - 1,
+                                date.getDayOfMonth());
+                        datePickerDialog.show();
+                    }
                 }
             });
         }
@@ -124,6 +122,7 @@ public class DiaryEntryActivity extends AppCompatActivity implements
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         date = date.withYear(year).withMonthOfYear(month + 1).withDayOfMonth(dayOfMonth);
         dateField.setText(FoodDiaryDay.HUMAN_READABLE_FORMATTER.print(date));
+        nutrientEditor.getView().requestFocus();
     }
 
     private void onCancel(){

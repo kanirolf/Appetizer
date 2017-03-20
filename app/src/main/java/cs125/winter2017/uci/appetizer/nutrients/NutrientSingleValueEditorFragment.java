@@ -96,7 +96,12 @@ public class NutrientSingleValueEditorFragment extends Fragment implements TextW
     }
 
     public void setValue(double value){
-        String toDisplay = String.format(Locale.getDefault(), "%.2f", value);
+        String toDisplay;
+
+        if (value % 1 == 0)
+            toDisplay = String.format(Locale.getDefault(), "%d", (int) value);
+        else
+            toDisplay = String.format(Locale.getDefault(), "%.2f", value);
 
         binding.nutrientValueEditable.setText(toDisplay);
         binding.nutrientValueNoneditable.setText(toDisplay);

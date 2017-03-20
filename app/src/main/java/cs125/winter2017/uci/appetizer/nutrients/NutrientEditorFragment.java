@@ -22,8 +22,11 @@ public class NutrientEditorFragment extends Fragment implements NutrientFactHold
     private NutrientSingleValueEditorFragment fiberEditor;
 
     private OnNutrientsEditListener editListener;
+    private boolean settingValues;
 
-    public NutrientEditorFragment() {}
+    public NutrientEditorFragment() {
+        settingValues = false;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,27 +37,28 @@ public class NutrientEditorFragment extends Fragment implements NutrientFactHold
 
         calorieEditor = (NutrientSingleValueEditorFragment)
                 fragmentManager.findFragmentById(R.id.editor_calories);
-        calorieEditor.setEditListener(this);
         fatEditor = (NutrientSingleValueEditorFragment)
                 fragmentManager.findFragmentById(R.id.editor_fat);
-        fatEditor.setEditListener(this);
         proteinEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_protein);
-        proteinEditor.setEditListener(this);
         cholesterolEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_cholesterol);
-        cholesterolEditor.setEditListener(this);
         sugarEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_sugar);
-        sugarEditor.setEditListener(this);
         carbohydratesEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_carbohydrate);
-        carbohydratesEditor.setEditListener(this);
         sodiumEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_sodium);
-        sodiumEditor.setEditListener(this);
         fiberEditor = (NutrientSingleValueEditorFragment)
                         fragmentManager.findFragmentById(R.id.editor_fiber);
+
+        calorieEditor.setEditListener(this);
+        fatEditor.setEditListener(this);
+        proteinEditor.setEditListener(this);
+        cholesterolEditor.setEditListener(this);
+        sugarEditor.setEditListener(this);
+        carbohydratesEditor.setEditListener(this);
+        sodiumEditor.setEditListener(this);
         fiberEditor.setEditListener(this);
 
         setEditable(false);
@@ -74,6 +78,8 @@ public class NutrientEditorFragment extends Fragment implements NutrientFactHold
     }
 
     public void setValue(NutrientFactHolder nutrientFactHolder){
+        settingValues = true;
+
         calorieEditor.setValue(nutrientFactHolder.getCalorie());
         fatEditor.setValue(nutrientFactHolder.getFat());
         proteinEditor.setValue(nutrientFactHolder.getProtein());
@@ -82,6 +88,8 @@ public class NutrientEditorFragment extends Fragment implements NutrientFactHold
         carbohydratesEditor.setValue(nutrientFactHolder.getCarbs());
         sodiumEditor.setValue(nutrientFactHolder.getSodium());
         fiberEditor.setValue(nutrientFactHolder.getFiber());
+
+        settingValues = false;
     }
 
     @Override
@@ -126,7 +134,8 @@ public class NutrientEditorFragment extends Fragment implements NutrientFactHold
 
     @Override
     public void onValueEdit(String nutrient, double value) {
-        if (editListener != null)
+
+        if (editListener != null && !settingValues)
             editListener.onNutrientEdit(nutrient, value);
     }
 

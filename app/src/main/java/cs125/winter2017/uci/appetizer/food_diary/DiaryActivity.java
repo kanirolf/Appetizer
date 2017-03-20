@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +29,7 @@ public class DiaryActivity extends AppCompatActivity
     private static final int NEW_ENTRY = 0;
     private static final int EDIT_ENTRY = 1;
 
-    private RelativeLayout diaryAddEntry;
+    private CardView diaryAddEntry;
     private LinearLayout diaryFeed;
 
     private TextView diaryFeedEmpty;
@@ -58,7 +59,7 @@ public class DiaryActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        diaryAddEntry = (RelativeLayout) findViewById(R.id.diary_add_entry);
+        diaryAddEntry = (CardView) findViewById(R.id.diary_add_entry);
         diaryAddEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

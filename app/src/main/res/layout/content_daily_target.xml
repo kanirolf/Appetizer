@@ -29,12 +29,21 @@
                 android:layout_marginBottom="@dimen/content_padding">
 
                 <LinearLayout
+                    android:orientation="vertical"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:background="@android:color/white"
+                    android:background="@android:color/white">
 
-                    android:padding="@dimen/content_padding">
+                    <cs125.winter2017.uci.appetizer.CardHeader
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/content_padding"
+
+                        app:cardHeaderIcon="@drawable/ic_done_white_24dp"
+                        app:cardHeaderTitle="@string/diary_targets_label" />
 
                     <fragment
                         android:id="@+id/daily_target_editor"
@@ -42,7 +51,9 @@
                         android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment"
 
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+
+                        android:padding="@dimen/content_padding" />
 
                 </LinearLayout>
 

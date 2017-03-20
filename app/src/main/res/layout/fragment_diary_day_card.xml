@@ -82,7 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
-                            android:text='@{String.format(Locale.getDefault(), "%.2f", calories)}'/>
+                            android:text='@{calories % 1 == 0 ? String.format(Locale.getDefault(), "%d", (int) calories) : String.format(Locale.getDefault(), "%.2f", calories)}'/>
 
                         <android.support.v4.widget.Space
                             android:layout_width="@dimen/text_spacer"
@@ -110,6 +110,9 @@
 
                 <LinearLayout
                     android:id="@+id/diary_day_card_nutrients_container"
+
+                    android:orientation="vertical"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 

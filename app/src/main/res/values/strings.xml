@@ -8,7 +8,7 @@
     <string name="title_activity_daily_target">Daily Targets</string>
     <string name="title_activity_search">Search</string>
 
-    <string name="nav_diary">Home</string>
+    <string name="nav_diary">@string/title_activity_diary</string>
     <string name="nav_daily_target">@string/title_activity_daily_target</string>
     <string name="nav_search">Search</string>
 
@@ -54,12 +54,14 @@
     <string name="gram_units">g</string>
     <string name="milligram_units">mg</string>
 
+    <string name="diary_entry_dish_name_label">Dish name</string>
+    <string name="diary_entry_date_label">Date</string>
     <string name="diary_entry_unsaved">This entry has not been saved. Go back anyway?</string>
     <string name="diary_entry_name_hint">Enter dish name here...</string>
     <string name="diary_entry_delete_warning">This entry cannot be restored after deletion. Delete anyway?</string>
 
     <string name="daily_targets_saved">Nutritional targets saved!</string>
-
+    <string name="diary_targets_label">Targets</string>
 
     <string name="ok">OK</string>
     <string name="alert_cancel">CANCEL</string>
@@ -86,6 +88,7 @@
     <string name="search_meal_time_snack">Snack</string>
     <string name="search_meal_time_lunch">Lunch</string>
     <string name="search_location_perms_denied">Location permissions were denied.</string>
+
     <string name="get_location_getting_perms">Getting permissions...</string>
     <string name="get_location_connecting_API">Connecting to Google API...</string>
     <string name="get_location_getting_perms_failed">Getting permissions failed.</string>
