@@ -1,0 +1,15 @@
+KEYS:
+Nutritionix API:
+Login: App.itizer
+PW: CS125sux
+
+Application ID: 24e35392
+Application Key: b31b775b1586d5cef18054eadd23b48e
+
+Emory’s:
+Application ID: 463febfe
+Application Key: a60ae69ae343086a86778e86f3fb9851
+
+GOOGLE:
+Project name: App-itizer
+Google Places for Andriod: AIzaSyARCNUYBmwBkXLBCWkmddG2Kr-Bcb0xe-Y
