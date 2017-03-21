@@ -7,4 +7,6 @@
     <color name="ok_green">#64DD17</color>
 
     <color name="slight_grey">#AAAAAA</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

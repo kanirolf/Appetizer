@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".food_diary.DiaryActivity"
-            android:label="@string/title_activity_diary"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +48,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="cs125.winter2017.uci.appetizer.food_diary.DiaryActivity" />
         </activity>
+        <activity
+            android:name=".diet.DietaryRestrictionActivity"
+            android:label="@string/title_activity_dietary_restriction"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".first_time.FirstTimeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_first_time"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name=".location.GetLocationIntentService"
@@ -57,10 +66,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyARCNUYBmwBkXLBCWkmddG2Kr-Bcb0xe-Y" />
 
-        <activity
-            android:name=".diet.DietaryRestrictionActivity"
-            android:label="@string/title_activity_dietary_restriction"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

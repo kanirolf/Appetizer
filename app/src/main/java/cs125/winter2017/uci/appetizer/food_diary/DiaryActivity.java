@@ -1,6 +1,7 @@
 package cs125.winter2017.uci.appetizer.food_diary;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +24,7 @@ import cs125.winter2017.uci.appetizer.Search.SearchActivity;
 import cs125.winter2017.uci.appetizer.daily_targets.DailyTargetActivity;
 import cs125.winter2017.uci.appetizer.daily_targets.DailyTargets;
 import cs125.winter2017.uci.appetizer.diet.DietaryRestrictionActivity;
+import cs125.winter2017.uci.appetizer.first_time.FirstTimeActivity;
 
 public class DiaryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DiaryDayFragment.OnDiaryDayEditListener {
@@ -45,9 +47,19 @@ public class DiaryActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences("cs125.winter2017.uci.appetizer", 0);
+        if (preferences.getBoolean("FIRST_LAUNCH", true)){
+            Intent firstLaunchIntent = new Intent(this, FirstTimeActivity.class);
+            startActivity(firstLaunchIntent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_diary);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.title_activity_diary);
 
         dbHelper = new FoodDiaryDBHelper(this);
 

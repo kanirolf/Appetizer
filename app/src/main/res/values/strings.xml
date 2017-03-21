@@ -102,5 +102,11 @@
     <string name="diet_restrictions_label">Dietary restrictions</string>
     <string name="diet_restrictions_saved">Dietary restrictions saved!</string>
 
+    <string name="title_activity_first_time">FirstTimeActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="first_time_intro">Welcome! Before starting with the application, we\'ll need to ask you to supply the following data.</string>
+    <string name="next">NEXT</string>
+
 
 </resources>

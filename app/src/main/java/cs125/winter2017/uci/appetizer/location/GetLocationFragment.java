@@ -75,8 +75,7 @@ public class GetLocationFragment extends Fragment implements
         int locationPermissions = ActivityCompat.checkSelfPermission(
                 getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION);
         if (locationPermissions != PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+            requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         } else
             connectGoogleAPI();
 
