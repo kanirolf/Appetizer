@@ -11,12 +11,33 @@
     tools:context="cs125.winter2017.uci.appetizer.Search.SearchActivity"
     tools:showIn="@layout/app_bar_search">
 
+    <LinearLayout
+        android:id="@+id/search_in_progress_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/search_in_progress"
+
+            android:indeterminate="true"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <ScrollView
+        android:id="@+id/search_filters"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -96,6 +117,8 @@
                         app:cardHeaderTitle="@string/search_price_label" />
 
                     <RadioGroup
+                        android:id="@+id/search_price"
+
                         android:orientation="horizontal"
 
                         android:layout_width="match_parent"
@@ -176,6 +199,8 @@
                         app:cardHeaderTitle="@string/search_meal_time" />
 
                     <RadioGroup
+                        android:id="@+id/search_meal_time"
+
                         android:orientation="horizontal"
 
                         android:layout_width="match_parent"
@@ -188,63 +213,42 @@
                         android:checkedButton="@+id/search_meal_time_breakfast">
 
 
-                        <LinearLayout
-                            android:orientation="vertical"
+                        <RadioButton
+                            android:id="@+id/search_meal_time_breakfast"
 
                             android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
+                            android:text="@string/search_meal_time_breakfast" />
 
-                            <RadioButton
-                                android:id="@+id/search_meal_time_breakfast"
-
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-
-                                android:text="@string/search_meal_time_breakfast" />
-
-                            <RadioButton
-                                android:id="@+id/search_meal_time_dinner"
-
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-
-                                android:text="@string/search_meal_time_dinner" />
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:orientation="vertical"
+                        <RadioButton
+                            android:id="@+id/search_meal_time_dinner"
 
                             android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
+                            android:text="@string/search_meal_time_dinner" />
 
-                            <RadioButton
+                        <RadioButton
 
-                                android:id="@+id/search_meal_time_lunch"
+                            android:id="@+id/search_meal_time_lunch"
 
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                                android:text="@string/search_meal_time_lunch" />
+                            android:text="@string/search_meal_time_lunch" />
 
-                            <RadioButton
-                                android:id="@+id/search_meal_time_snack"
+                        <RadioButton
+                            android:id="@+id/search_meal_time_snack"
 
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-                                android:text="@string/search_meal_time_snack" />
-
-                        </LinearLayout>
+                            android:text="@string/search_meal_time_snack" />
 
 
                     </RadioGroup>
@@ -257,4 +261,23 @@
 
     </ScrollView>
 
+    <ScrollView
+        android:id="@+id/search_results_container"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/search_results"
+
+            android:orientation="vertical"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="@dimen/content_padding">
+
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

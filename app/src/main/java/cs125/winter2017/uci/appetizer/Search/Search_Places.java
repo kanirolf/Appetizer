@@ -33,20 +33,19 @@ public class Search_Places{
 
     }
 
-    private String get_url(){
-        String base_search_url = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
-        String search_url = base_search_url + "&query=" + Query;
+    public String get_url(){
+        String base_search_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+        String search_url = base_search_url + "&keyword=" + Query;
         search_url = search_url + "&type=" + Type;
         search_url = search_url + "&location=" + Double.toString(Lat) + "," + Double.toString(Lon);
         search_url = search_url + "&radius=" + Radius;
         if (Price > -1){
-            search_url = search_url + "&price=" + Price;
+            search_url = search_url + "&maxprice=" + Price;
         }
         //search_url = search_url + "&opennow=" + Boolean.toString(Opennow);
         search_url = search_url + "&key=" + GoogleAPIkey;
 
         return search_url;
-
     }
 
     private String get_places(String url){
