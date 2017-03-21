@@ -3,6 +3,7 @@
     package="cs125.winter2017.uci.appetizer">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -48,12 +49,18 @@
                 android:value="cs125.winter2017.uci.appetizer.food_diary.DiaryActivity" />
         </activity>
 
-        <service android:name=".location.GetLocationIntentService"
+        <service
+            android:name=".location.GetLocationIntentService"
             android:enabled="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyARCNUYBmwBkXLBCWkmddG2Kr-Bcb0xe-Y" />
+
+        <activity
+            android:name=".diet.DietaryRestrictionActivity"
+            android:label="@string/title_activity_dietary_restriction"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

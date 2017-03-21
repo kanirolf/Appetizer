@@ -1,9 +1,12 @@
 package cs125.winter2017.uci.appetizer.nutrients;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+import android.databinding.Observable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class NutrientFacts implements NutrientFactHolder, Parcelable {
+public class NutrientFacts extends BaseObservable implements NutrientFactHolder, Parcelable {
 
     public static final Parcelable.Creator<NutrientFacts> CREATOR =
         new Parcelable.Creator<NutrientFacts>() {
@@ -133,41 +136,49 @@ public class NutrientFacts implements NutrientFactHolder, Parcelable {
         dest.writeDouble(fiber);
     }
 
+    @Bindable
     @Override
     public double getCalorie() {
         return calorie;
     }
 
+    @Bindable
     @Override
     public double getFat() {
         return fat;
     }
 
+    @Bindable
     @Override
     public double getProtein() {
         return protein;
     }
 
+    @Bindable
     @Override
     public double getCholesterol() {
         return cholesterol;
     }
 
+    @Bindable
     @Override
     public double getSugar() {
         return sugar;
     }
 
+    @Bindable
     @Override
     public double getCarbs() {
         return carbs;
     }
 
+    @Bindable
     @Override
     public double getSodium() {
         return sodium;
     }
 
+    @Bindable
     @Override
     public double getFiber() {
         return fiber;

@@ -8,4 +8,5 @@
         <attr name="cardHeaderIcon" format="integer" />
         <attr name="cardHeaderTitle" format="string" />
     </declare-styleable>
+    <declare-styleable name="DailyTargetEditor"></declare-styleable>
 </resources>

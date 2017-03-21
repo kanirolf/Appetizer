@@ -106,8 +106,9 @@ public class NutrientSingleValueEditorFragment extends Fragment implements TextW
         binding.nutrientValueEditable.setText(toDisplay);
         binding.nutrientValueNoneditable.setText(toDisplay);
 
-        if (binding.getEditable())
+        if (binding.getEditable()){
             this.value = value;
+        }
     }
 
     public double getValue(){

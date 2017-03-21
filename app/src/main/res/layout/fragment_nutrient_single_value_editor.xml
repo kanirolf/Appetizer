@@ -6,7 +6,7 @@
         <variable name="units" type="String" />
         <variable name="editable" type="boolean" />
     </data>
-    <FrameLayout
+    <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,7 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_gravity="center_vertical|left"
+            android:gravity="left|center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
 
             android:text="@{label}"/>
 
@@ -30,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_gravity="center_vertical|right">
+            android:layout_alignParentRight="true">
 
             <EditText
                 android:id="@+id/nutrient_value_editable"
@@ -85,6 +87,6 @@
 
         </LinearLayout>
 
-    </FrameLayout>
+    </RelativeLayout>
 
 </layout>

@@ -7,10 +7,12 @@
     <string name="title_activity_diary_entry_edit">Edit Diary Entry</string>
     <string name="title_activity_daily_target">Daily Targets</string>
     <string name="title_activity_search">Search</string>
+    <string name="title_activity_dietary_restriction">Dietary restrictions</string>
 
+    <string name="nav_search">Search</string>
     <string name="nav_diary">@string/title_activity_diary</string>
     <string name="nav_daily_target">@string/title_activity_daily_target</string>
-    <string name="nav_search">Search</string>
+    <string name="nav_dietary_restriction">@string/title_activity_dietary_restriction</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -96,5 +98,9 @@
     <string name="get_location_connecting_API_failed">Connecting to Google API failed.</string>
     <string name="get_location_getting_location_failed">Failed to get a location.</string>
     <string name="get_location_loading_map">Loading map...</string>
+
+    <string name="diet_restrictions_label">Dietary restrictions</string>
+    <string name="diet_restrictions_saved">Dietary restrictions saved!</string>
+
 
 </resources>

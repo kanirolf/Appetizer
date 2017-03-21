@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/diet_restriction_checked"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerVertical="true"
+
+        android:layout_alignParentLeft="true"/>
+
+    <android.support.v4.widget.Space
+        android:id="@+id/diet_restriction_space"
+
+        android:layout_width="@dimen/place_autocomplete_button_padding"
+        android:layout_height="wrap_content"
+
+        android:layout_toRightOf="@+id/diet_restriction_checked"/>
+
+    <TextView
+        android:id="@+id/diet_restriction_label"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_toRightOf="@+id/diet_restriction_space"
+
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

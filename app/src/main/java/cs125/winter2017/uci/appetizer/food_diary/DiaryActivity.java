@@ -22,6 +22,7 @@ import cs125.winter2017.uci.appetizer.R;
 import cs125.winter2017.uci.appetizer.Search.SearchActivity;
 import cs125.winter2017.uci.appetizer.daily_targets.DailyTargetActivity;
 import cs125.winter2017.uci.appetizer.daily_targets.DailyTargets;
+import cs125.winter2017.uci.appetizer.diet.DietaryRestrictionActivity;
 
 public class DiaryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DiaryDayFragment.OnDiaryDayEditListener {
@@ -107,6 +108,10 @@ public class DiaryActivity extends AppCompatActivity
             case R.id.nav_daily_targets:
                 Intent dailyGoalsIntent = new Intent(this, DailyTargetActivity.class);
                 startActivity(dailyGoalsIntent);
+                break;
+            case R.id.nav_dietary_restriction:
+                Intent dietaryRestrictionsIntent = new Intent(this, DietaryRestrictionActivity.class);
+                startActivity(dietaryRestrictionsIntent );
                 break;
         }
 

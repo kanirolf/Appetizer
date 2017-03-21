@@ -202,6 +202,7 @@ public class GetLocationFragment extends Fragment implements
     public void setLocationAcquireListener(OnLocationAcquireListener acquireListener){
         this.acquireListener = acquireListener;
     }
+
     private void connectGoogleAPI(){
         locationMessage.setText(R.string.get_location_connecting_API);
         googleApiClient.connect();

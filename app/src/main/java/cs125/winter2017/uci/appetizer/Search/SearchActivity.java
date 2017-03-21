@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import cs125.winter2017.uci.appetizer.R;
 import cs125.winter2017.uci.appetizer.daily_targets.DailyTargetActivity;
+import cs125.winter2017.uci.appetizer.diet.DietaryRestrictionActivity;
 import cs125.winter2017.uci.appetizer.food_diary.DiaryActivity;
 import cs125.winter2017.uci.appetizer.location.GetLocationFragment;
 
@@ -67,13 +68,17 @@ public class SearchActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
-            case R.id.nav_home:
+            case R.id.nav_diary:
                 Intent mainActivityIntent = new Intent(this, DiaryActivity.class);
                 startActivity(mainActivityIntent);
                 break;
             case R.id.nav_daily_targets:
                 Intent dailyGoalsIntent = new Intent(this, DailyTargetActivity.class);
                 startActivity(dailyGoalsIntent);
+                break;
+            case R.id.nav_dietary_restriction:
+                Intent dietaryRestrictionIntent = new Intent(this, DietaryRestrictionActivity.class);
+                startActivity(dietaryRestrictionIntent);
                 break;
         }
 

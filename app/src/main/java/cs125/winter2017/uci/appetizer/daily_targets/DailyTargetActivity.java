@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,21 +13,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
+import java.util.HashSet;
+
+import cs125.winter2017.uci.appetizer.diet.DietaryRestrictionActivity;
 import cs125.winter2017.uci.appetizer.food_diary.DiaryActivity;
 import cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment;
 import cs125.winter2017.uci.appetizer.R;
 import cs125.winter2017.uci.appetizer.Search.SearchActivity;
+import cs125.winter2017.uci.appetizer.nutrients.NutrientSingleValueEditorFragment;
 
 public class DailyTargetActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        NutrientEditorFragment.OnNutrientsEditListener {
+        NutrientEditorFragment.OnNutrientsEditListener, View.OnClickListener {
 
-    private NutrientEditorFragment nutrientEditor;
+    private DailyTargetFragment targetEditor;
+    private View submitButton;
 
-    private DailyTargets dailyTargets;
+    private HashSet<NutrientSingleValueEditorFragment> editedValues;
 
-    private boolean changed;
+    public DailyTargetActivity(){
+        editedValues = new HashSet<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,26 +53,12 @@ public class DailyTargetActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        nutrientEditor = (NutrientEditorFragment)
+        targetEditor = (DailyTargetFragment)
                 getSupportFragmentManager().findFragmentById(R.id.daily_target_editor);
-        nutrientEditor.setEditable(true);
-        nutrientEditor.setEditListener(this);
+        targetEditor.setEditListener(this);
 
-        findViewById(R.id.daily_target_edit_submit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit();
-            }
-        });
-
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        dailyTargets = DailyTargets.loadFromContext(this);
-        nutrientEditor.setValue(dailyTargets);
+        submitButton = findViewById(R.id.daily_target_edit_submit);
+        hideSubmit();
     }
 
     @Override
@@ -71,7 +66,7 @@ public class DailyTargetActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (changed) {
+        } else if (!editedValues.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setMessage("There are unsaved changes to the nutrient targets. Leave anyway?")
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -89,8 +84,6 @@ public class DailyTargetActivity extends AppCompatActivity
                     .show();
         } else
             super.onBackPressed();
-
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -99,18 +92,21 @@ public class DailyTargetActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         Intent moveAwayIntent = null;
 
-        switch (item.getItemId()){
-            case R.id.nav_home:
+        switch (item.getItemId()) {
+            case R.id.nav_diary:
                 moveAwayIntent = new Intent(this, DiaryActivity.class);
                 break;
             case R.id.nav_search:
                 moveAwayIntent = new Intent(this, SearchActivity.class);
                 break;
+            case R.id.nav_dietary_restriction:
+                moveAwayIntent = new Intent(this, DietaryRestrictionActivity.class);
+                break;
         }
 
         if (moveAwayIntent != null) {
             final Intent continueIntent = moveAwayIntent;
-            if (changed)
+            if (!editedValues.isEmpty())
                 new AlertDialog.Builder(this)
                         .setMessage("There are unsaved changes to the nutrient targets. Leave anyway?")
                         .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -126,8 +122,8 @@ public class DailyTargetActivity extends AppCompatActivity
                         })
                         .create()
                         .show();
-             else
-                 startActivity(continueIntent);
+            else
+                startActivity(continueIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -137,30 +133,109 @@ public class DailyTargetActivity extends AppCompatActivity
 
     @Override
     public void onNutrientEdit(String nutrient, double value) {
-        changed = true;
+
+        DailyTargets dailyTargets = DailyTargets.loadFromContext(this);
+
+        NutrientSingleValueEditorFragment toModify = null;
+        FragmentManager fragmentManager =
+                targetEditor.getNutrientEditor().getChildFragmentManager();
+
+        boolean changed = false;
+
+        if (nutrient.equals(getString(R.string.calories_label))) {
+            toModify = (NutrientSingleValueEditorFragment)
+                    fragmentManager.findFragmentById(R.id.editor_calories);
+            changed = targetEditor.getCalorie() != dailyTargets.getCalorie();
+        } else if (nutrient.equals(getString(R.string.fat_label))) {
+            toModify = (NutrientSingleValueEditorFragment)
+                    fragmentManager.findFragmentById(R.id.editor_fat);
+            changed = targetEditor.getFat() != dailyTargets.getFat();
+        } else if (nutrient.equals(getString(R.string.protein_label))){
+            toModify = (NutrientSingleValueEditorFragment)
+                    fragmentManager.findFragmentById(R.id.editor_protein);
+            changed = targetEditor.getProtein() != dailyTargets.getProtein();
+        } else if (nutrient.equals(getString(R.string.cholesterol_label))){
+            toModify = (NutrientSingleValueEditorFragment)
+                    fragmentManager.findFragmentById(R.id.editor_cholesterol);
+            changed = targetEditor.getCholesterol() != dailyTargets.getCholesterol();
+        } else if (nutrient.equals(getString(R.string.sugar_label))){
+            toModify = (NutrientSingleValueEditorFragment)
+                    fragmentManager.findFragmentById(R.id.editor_sugar);
+            changed = targetEditor.getSugar() != dailyTargets.getSugar();
+        } else if (nutrient.equals(getString(R.string.carbohydrates_label))){
+            toModify = (NutrientSingleValueEditorFragment)
+                    fragmentManager.findFragmentById(R.id.editor_carbohydrate);
+            changed = targetEditor.getCarbs() != dailyTargets.getCarbs();
+        } else if (nutrient.equals(getString(R.string.sodium_label))){
+            toModify = (NutrientSingleValueEditorFragment)
+                    fragmentManager.findFragmentById(R.id.editor_sodium);
+            changed = targetEditor.getSodium() != dailyTargets.getSodium();
+        } else if (nutrient.equals(getString(R.string.fiber_label))){
+            toModify = (NutrientSingleValueEditorFragment)
+                    fragmentManager.findFragmentById(R.id.editor_fiber);
+            changed = targetEditor.getFiber() != dailyTargets.getFiber();
+        }
+
+        if (toModify == null)
+            return;
+
+        View editedView;
+        ViewGroup modifiedView = (ViewGroup) toModify.getView();
+        if (changed){
+            if (modifiedView.getTag() == null) {
+                editedView = getLayoutInflater().inflate(R.layout.layout_nutrient_edited, modifiedView, false);
+                modifiedView.addView(editedView);
+                modifiedView.setTag(editedView);
+                editedValues.add(toModify);
+            }
+        } else {
+            editedView = (View) modifiedView.getTag();
+            if (editedView != null){
+                modifiedView.removeView(editedView);
+                modifiedView.setTag(null);
+            }
+            editedValues.remove(toModify);
+        }
+
+        if (editedValues.isEmpty())
+            hideSubmit();
+        else
+            showSubmit();
     }
 
-    public void onSubmit(){
+    @Override
+    public void onClick(View v) {
+        targetEditor.commit();
 
-        dailyTargets.setCalorie(nutrientEditor.getCalorie());
-        dailyTargets.setFat(nutrientEditor.getFat());
-        dailyTargets.setProtein(nutrientEditor.getProtein());
-        dailyTargets.setCholesterol(nutrientEditor.getCholesterol());
-        dailyTargets.setSugar(nutrientEditor.getSugar());
-        dailyTargets.setCarbs(nutrientEditor.getCarbs());
-        dailyTargets.setSodium(nutrientEditor.getSodium());
-        dailyTargets.setFiber(nutrientEditor.getFiber());
+        for (NutrientSingleValueEditorFragment editorFragment : editedValues) {
+            ViewGroup modifiedView = (ViewGroup) editorFragment.getView();
+            View editedView = (View) modifiedView.getTag();
+            if (editedView != null) {
+                modifiedView.removeView(editedView);
+                modifiedView.setTag(null);
+            }
+        }
+
+        editedValues.clear();
+        hideSubmit();
 
         new AlertDialog.Builder(this)
-            .setMessage(R.string.daily_targets_saved)
-            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    changed = false;
-                }
-            })
-            .create()
-            .show();
+                .setMessage(R.string.daily_targets_saved)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {}
+                })
+                .create()
+                .show();
     }
 
+    private void hideSubmit(){
+        submitButton.setVisibility(View.GONE);
+        submitButton.setOnClickListener(null);
+    }
+
+    private void showSubmit(){
+        submitButton.setVisibility(View.VISIBLE);
+        submitButton.setOnClickListener(this);
+    }
 }

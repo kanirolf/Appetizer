@@ -13,11 +13,9 @@ public class DailyTargets implements NutrientFactHolder {
         return new DailyTargets(context);
     }
 
-    private final Context context;
     private final SharedPreferences dailyTargetPrefs;
 
     private DailyTargets(Context context){
-        this.context = context;
         this.dailyTargetPrefs = context.getSharedPreferences(PREF_FILE, 0);
     }
 

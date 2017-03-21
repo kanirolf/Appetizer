@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <cs125.winter2017.uci.appetizer.CardHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="@dimen/content_padding"
+
+            app:cardHeaderTitle="@string/diary_targets_label"
+            app:cardHeaderIcon="@drawable/ic_done_white_24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:padding="@dimen/content_padding"
+
+            android:background="@android:color/white">
+
+            <fragment
+                android:id="@+id/daily_target_nutrient_editor"
+
+                android:name="cs125.winter2017.uci.appetizer.nutrients.NutrientEditorFragment"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:padding="@dimen/content_padding" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
