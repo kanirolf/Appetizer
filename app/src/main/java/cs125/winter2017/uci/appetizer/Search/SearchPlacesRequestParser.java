@@ -1,5 +1,7 @@
 package cs125.winter2017.uci.appetizer.Search;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,10 +23,14 @@ public final class SearchPlacesRequestParser {
     }
 
     public static Restaurant parseResult(JSONObject result) throws JSONException{
+        Log.i("SEARCH_PLACES_R_PARSER", result.toString());
         String ID = result.getString("id");
 
         String name = result.getString("name");
-        String address = result.getString("vicinity");
+
+        String address = "";
+        if (result.has("vicinity"))
+            address = result.getString("vicinity");
 
         int priceLevel = -1;
         if (result.has("price_level"))
@@ -34,7 +40,10 @@ public final class SearchPlacesRequestParser {
         double lat = location.getDouble("lat");
         double lng = location.getDouble("lng");
 
-        double rating = result.getDouble("rating");
+
+        double rating = 0;
+        if (result.has("rating"))
+            result.getDouble("rating");
 
         return new Restaurant(name, ID, address, lat, lng, priceLevel, rating);
     }

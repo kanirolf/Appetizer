@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,8 +19,8 @@ import java.util.List;
 public class SearchPlacesRequest extends JsonObjectRequest {
 
     private static final String API_KEY = "AIzaSyARCNUYBmwBkXLBCWkmddG2Kr-Bcb0xe-Y";
-    private static final String BASE_URL =
-            "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+    private static final String HOSTNAME = "maps.googleapis.com";
+    private static final String PATH = "/maps/api/place/nearbysearch/json";
 
     private SearchPlacesRequest(Builder builder){
         super(Method.GET, getURL(builder), null, newResponseListener(builder.listener),
@@ -105,11 +107,8 @@ public class SearchPlacesRequest extends JsonObjectRequest {
 
 
     private static String getURL(Builder builder){
-
-        String search_url = BASE_URL;
-
-        search_url += "&keyword=" + builder.query;
-        search_url +=  "&type=" + builder.mealType;
+        String queryString = "keyword=" + builder.query;
+        queryString +=  "&type=" + builder.mealType;
 
         Location location = builder.location;
         double lat = 0;
@@ -119,14 +118,19 @@ public class SearchPlacesRequest extends JsonObjectRequest {
             lng = location.getLongitude();
         }
 
-        search_url += "&location=" + Double.toString(lat) + "," + Double.toString(lng);
-        search_url += "&radius=" + builder.radius;
+        queryString += "&location=" + Double.toString(lat) + "," + Double.toString(lng);
+        queryString += "&radius=" + builder.radius;
         if (builder.price > -1)
-            search_url = search_url + "&maxprice=" + builder.price;
+            queryString = queryString + "&maxprice=" + builder.price;
 
-        search_url = search_url + "&key=" + API_KEY;
+        queryString = queryString + "&key=" + API_KEY;
 
-        return search_url;
+        try {
+            return new URI("https", HOSTNAME, PATH, queryString, null).toASCIIString();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public interface ResponseListener {

@@ -26,6 +26,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -92,10 +93,6 @@ public class SearchActivity extends AppCompatActivity
 
         resultsContainer = (ViewGroup) findViewById(R.id.search_results);
 
-        filterView.setVisibility(View.VISIBLE);
-        resultsView.setVisibility(View.GONE);
-        progressView.setVisibility(View.GONE);
-
         searchQueryText = (EditText) findViewById(R.id.search_bar_query);
         searchQueryText.setOnEditorActionListener(this);
 
@@ -112,16 +109,19 @@ public class SearchActivity extends AppCompatActivity
         searchIcon = (ImageView) findViewById(R.id.search_bar_search);
         searchIcon.setOnClickListener(this);
         searchIcon.setActivated(false);
+
+        doFilters();
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer.isDrawerOpen(GravityCompat.START))
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        else if (resultsView.getVisibility() == View.VISIBLE)
+            doFilters();
+        else
             super.onBackPressed();
-        }
     }
 
     @Override
@@ -155,20 +155,9 @@ public class SearchActivity extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        if (v.isActivated()){
-            searchIcon.setActivated(false);
-
-            filterView.setVisibility(View.VISIBLE);
-            progressView.setVisibility(View.GONE);
-            resultsView.setVisibility(View.GONE);
-
-            searchQueryText.requestFocus();
-            searchQueryText.selectAll();
-
-
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(searchQueryText, 0);
-        } else
+        if (v.isActivated())
+            doFilters();
+        else
             doSearch();
     }
 
@@ -183,6 +172,12 @@ public class SearchActivity extends AppCompatActivity
 
     @Override
     public void onResponse(List<Restaurant> results) {
+        if (results.size() == 0){
+            Toast.makeText(this, "No results found.", Toast.LENGTH_SHORT).show();
+            doFilters();
+            return;
+        }
+
         progressView.setVisibility(View.GONE);
         filterView.setVisibility(View.GONE);
         resultsView.setVisibility(View.VISIBLE);
@@ -212,12 +207,28 @@ public class SearchActivity extends AppCompatActivity
     public void onErrorResponse(VolleyError error) {
         new AlertDialog.Builder(this)
                 .setMessage(error.toString())
-                .setPositiveButton("Meow", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {}
+                    public void onClick(DialogInterface dialog, int which) {
+                        doFilters();
+                    }
                 })
                 .create()
                 .show();
+    }
+
+    private void doFilters(){
+        searchIcon.setActivated(false);
+
+        filterView.setVisibility(View.VISIBLE);
+        progressView.setVisibility(View.GONE);
+        resultsView.setVisibility(View.GONE);
+
+        searchQueryText.requestFocus();
+        searchQueryText.selectAll();
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(searchQueryText, 0);
     }
 
     private void doSearch(){
